@@ -1,0 +1,6 @@
+@ArganaWeed_Api_HostAddress = http://localhost:5153
+
+GET {{ArganaWeed_Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
