@@ -18,6 +18,22 @@ namespace ArganaWeed_Api.Controllers
             _config = config;
             _jwtService = jwtService;
         }
+        /*
+        [HttpPost("login")]
+        public async Task<LoginResponse> Login(LoginRequest request)
+        {
+            // Remplacez par votre logique d'authentification (ex. vérification des utilisateurs en DB)
+            LoginResponse loginResponse= new LoginResponse();
+
+            if (request.Email == "test@example.com" && request.Password == "password")
+            {
+                loginResponse.Message = "Succes";
+            }
+            else loginResponse.Message = "Fail!";
+            return loginResponse;
+           
+        }
+        */
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] AuthRequest request)

@@ -1,5 +1,6 @@
 ﻿using ArganaWeed_Api.Data;
 using ArganaWeed_Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArganaWeed_Api.Controllers
@@ -14,13 +15,23 @@ namespace ArganaWeed_Api.Controllers
         {
             _context = context;
         }
-
+        /*
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _context.GetAllUsersAsync();
             return Ok(users);
+        }*/
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            var users = await _context.GetAllUsersAsync();
+            return users;
         }
+
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
