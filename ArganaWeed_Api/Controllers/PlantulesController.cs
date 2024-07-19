@@ -37,6 +37,12 @@ namespace ArganaWeed_Api.Controllers
             var plantules = await _context.GetPlantulesInactiveAsync();
             return Ok(plantules);
         }
+        [HttpGet("archived")]
+        public async Task<ActionResult<IEnumerable<PlantuleDetail>>> GetPlantulesArchived()
+        {
+            var plantules = await _context.GetPlantulesArchivedAsync();
+            return Ok(plantules);
+        }
 
         [HttpGet("search/{searchString}")]
         public async Task<ActionResult<IEnumerable<PlantuleDetail>>> SearchPlantules(string searchString)
@@ -130,7 +136,16 @@ namespace ArganaWeed_Api.Controllers
             public string Sante { get; set; }
         }
 
-       
+        [HttpPut("archive")]
+        public async Task<ActionResult<string>> ArchivePlantules([FromBody] ArchivePlantulesRequest request)
+        {
+            var message = await _context.ArchivePlantulesAsync(request.EndDate, User.Identity.Name);
+            return Ok(message);
+        }
+        public class ArchivePlantulesRequest
+        {
+            public DateTime EndDate { get; set; }
+        }
 
         public class UpdateStadeRequest
         {

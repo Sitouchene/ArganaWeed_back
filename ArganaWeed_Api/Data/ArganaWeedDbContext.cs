@@ -19,6 +19,13 @@ namespace ArganaWeed_Api.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<PlantuleDetail> PlantuleDetails { get; set; }
+        // Dashboard
+        public DbSet<PlantulesStats> PlantulesStats { get; set; }
+        public DbSet<PlantulesParCategorie> PlantulesParCategorie { get; set; }
+        public DbSet<PlantulesParStade> PlantulesParStade { get; set; }
+        public DbSet<PlantulesParSante> PlantulesParSante { get; set; }
+        public DbSet<EvolutionMensuellePlantules> EvolutionMensuellePlantules { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,6 +63,28 @@ namespace ArganaWeed_Api.Data
             modelBuilder.Entity<PlantuleDetail>()
            .ToView("vwPlantuleDetails")
            .HasKey(p => p.PlantuleId);
+
+            modelBuilder.Entity<PlantulesStats>()
+                .ToView("vwPlantulesStats")
+                .HasNoKey();
+
+            modelBuilder.Entity<PlantulesParCategorie>()
+                .ToView("vwPlantulesParCategorie")
+                .HasNoKey();
+
+            modelBuilder.Entity<PlantulesParStade>()
+                .ToView("vwPlantulesParStade")
+                .HasNoKey();
+
+            modelBuilder.Entity<PlantulesParSante>()
+                .ToView("vwPlantulesParSante")
+                .HasNoKey();
+
+            modelBuilder.Entity<EvolutionMensuellePlantules>()
+                .ToView("vwEvolutionMensuellePlantules")
+                .HasNoKey();
+
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -271,6 +300,19 @@ namespace ArganaWeed_Api.Data
             return result == 1 ? "Sortie mise à jour avec succès!" : "Erreur lors de la mise à jour de la sortie.";
         }
 
+        // ARCHIVAGE de plantules inactifs depuis une certaine date
+        public async Task<string> ArchivePlantulesAsync(DateTime endDate, string eventUserName)
+        {
+            // Utilisation de ExecuteSqlRawAsync pour exécuter la procédure stockée
+            var result = await Database.ExecuteSqlRawAsync(
+                "EXEC archivePlantules @p0",
+                endDate);
+
+          
+            return result > 0 ? "Plantules archivées avec succès!" : "Aucune plantule à archiver ou erreur lors de l'archivage.";
+        }
+
+
         // GET
         public async Task<List<PlantuleDetail>> SearchPlantulesAsync(string searchString)
         {
@@ -296,6 +338,12 @@ namespace ArganaWeed_Api.Data
         {
             return await PlantuleDetails.FromSqlRaw("EXEC getPlantulesInactive").ToListAsync();
         }
+        
+        public async Task<List<PlantuleDetail>> GetPlantulesArchivedAsync()
+        {
+            return await PlantuleDetails.FromSqlRaw("EXEC getPlantulesArchived").ToListAsync();
+        }
+
 
         public async Task<PlantuleDetail> GetPlantuleBySlugAsync(string slug)
         {

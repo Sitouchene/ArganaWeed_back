@@ -13,6 +13,7 @@
         public string EmplacementCode { get; set; }
         public int EmplacementId { get; set; }
         public bool Statut { get; set; }
+        public bool IsArchived { get; set; }
         public string Qrbase { get; set; }
         public DateTime? SortieDate { get; set; }
         public string SortieType { get; set; }
