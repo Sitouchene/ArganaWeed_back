@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:GestionPlantule.Pages"
+            x:Class="GestionPlantule.MainPage">
+
+    <FlyoutPage.Flyout>
+        <ContentPage Title="Menu">
+
+            <StackLayout>
+                <Border Margin="5">
+                    <StackLayout>
+                        <Label Text="Pas d'utilisateur" x:Name="UserName" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="5"/>
+                        <Button Text="Deconnexion" Clicked="Deconnexion_Clicked" Margin="5" />
+                    </StackLayout>
+                </Border>
+            
+                <Border Margin="5">
+                    <StackLayout Padding="10">
+                        <Label Text="Menu" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="5"/>
+                        <Button Text="Gestion Plantules" Clicked="OnPageClicked" CommandParameter="GestionPlantules"  Margin="5"/>
+                        <Button Text="Importation Fichier" Clicked="OnPageClicked" CommandParameter="ImportationFichier"  Margin="5"/>
+                        <Button Text="Scanner Plantule" Clicked="OnPageClicked" CommandParameter="ScannerPlantule"  Margin="5"/>
+                        <Button Text="Admin Gestion" Clicked="OnPageClicked" CommandParameter="AdminGestion" Margin="5" />
+                        <Button Text="Historique" Clicked="OnPageClicked" CommandParameter="Historique" Margin="5" />
+                        <Button Text="Archivage" Clicked="OnPageClicked" CommandParameter="Archivage"  Margin="5"/>
+                        <Button Text="Guide" Clicked="OnPageClicked" CommandParameter="Guide"  Margin="5"/>
+                    </StackLayout>
+                </Border>
+            </StackLayout>
+            
+        </ContentPage>
+    </FlyoutPage.Flyout>
+
+    <FlyoutPage.Detail>
+        <NavigationPage>
+            <!-- Page par défaut à afficher au démarrage -->
+            <x:Arguments>
+                <local:GestionPlantulesPage />
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
+</FlyoutPage>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GestionPlantule.Pages.GestionPlantulesPage"
+             Title="Gestion des Plantules">
+    <StackLayout Padding="10">
+        <!-- Statistiques des Plantules -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="20">
+            <StackLayout>
+                <Label Text="Plantules Actives:" FontSize="Medium" />
+                <Label x:Name="ActivePlantulesCountLabel" Text="0 / 2000" FontSize="Medium" />
+            </StackLayout>
+            <StackLayout>
+                <Label Text="Total Plantules:" FontSize="Medium" />
+                <Label x:Name="TotalPlantulesCountLabel" Text="0 / 2000" FontSize="Medium" />
+            </StackLayout>
+            <StackLayout>
+                <Label Text="Plantules Inactives:" FontSize="Medium" />
+                <Label x:Name="InactivePlantulesCountLabel" Text="0 / 2000" FontSize="Medium" />
+            </StackLayout>
+        </StackLayout>
+
+        <!-- Barre de recherche -->
+        <SearchBar x:Name="SearchBar" Placeholder="Rechercher..." TextChanged="OnSearchBarTextChanged" />
+
+        <!-- ListView des Plantules -->
+        <ListView x:Name="PlantulesListView" ItemTapped="OnPlantuleItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" Padding="10">
+                            <Label Text="{Binding PlantuleVariete}" FontAttributes="Bold" />
+                            <Label Text="{Binding PlantuleDescription}" />
+                            <Label Text="{Binding DateReception, StringFormat='Reception: {0:dd/MM/yyyy}'}" />
+                            <Label Text="{Binding SortieDate, StringFormat='Sortie: {0:dd/MM/yyyy}'}" />
+                            <Label Text="{Binding Sante}" TextColor="{Binding SanteColor}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Ajouter Plantule" Clicked="OnAddNewPlantuleClicked" HorizontalOptions="Center" Margin="10" />
+    </StackLayout>
+</ContentPage>

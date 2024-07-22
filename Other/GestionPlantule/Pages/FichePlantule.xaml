@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GestionPlantule.Pages.FichePlantule"
+             Title="FichePlantule">
+    <!-- Deuxième partie : Fiche plantule -->
+    <ScrollView Padding="10">
+        <StackLayout>
+            <Label Text="Fiche Plantule" FontSize="Large" />
+
+            <Entry x:Name="IdEntry" Placeholder="Plantule ID" Margin="5" />
+
+            <Picker x:Name="plantuleVarietePicker" Title="Variété" Margin="5" />
+
+            <Editor x:Name="plantuleDescriptionEditor" Placeholder="Description" Margin="5" />
+
+            <DatePicker x:Name="dateReceptionPicker" DateSelected="OnDateReceptionChanged" Margin="5" />
+
+            <Picker x:Name="provenancePicker" Title="Provenance" Margin="5" />
+
+            <Picker x:Name="stadePicker" Title="Stade" Margin="5">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Initiation</x:String>
+                        <x:String>Micro dissection</x:String>
+                        <x:String>Magenta</x:String>
+                        <x:String>Double magenta</x:String>
+                        <x:String>Hydroponie</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Picker x:Name="santePicker" Title="Santé" Margin="5">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Bon</x:String>
+                        <x:String>Moyen</x:String>
+                        <x:String>Mauvais</x:String>
+                        <x:String>En danger</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Picker x:Name="emplacementPicker" Title="Emplacement" Margin="5" />
+
+            <Label Text="Statut"/>
+            <CheckBox x:Name="statutCheckBox" Margin="5" />
+
+            <DatePicker x:Name="sortieDatePicker" DateSelected="OnSortieDateChanged" Margin="5" />
+
+            <Image x:Name="qrCodeImage" HeightRequest="100" WidthRequest="100" Margin="5" />
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="5">
+                <Button Text="Valider" Clicked="OnValidateClicked" Margin="5" />
+                <Button Text="Imprimer code QR" Clicked="OnPrintQrCodeClicked" Margin="5" />
+                <Button Text="Imprimer Fiche" Clicked="OnPrintFicheClicked" Margin="5" />
+                <Button Text="Fermer" Clicked="OnCloseClicked" Margin="5" />
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

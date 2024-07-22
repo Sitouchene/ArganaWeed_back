@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GestionPlantule.Pages.EmployerPage">
+
+    <StackLayout Padding="20">
+        <!-- Barre de recherche et Picker pour le filtre -->
+        <StackLayout Orientation="Horizontal">
+            <SearchBar x:Name="SearchBar" Placeholder="Rechercher..." TextChanged="OnSearchBarTextChanged"/>
+            <Picker Title="Statut">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Actif</x:String>
+                        <x:String>Inactif</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </StackLayout>
+
+        <!-- ListView -->
+        <ListView x:Name="ItemsListView" ItemSelected="OnItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+                            <Label Text="{Binding UserName}" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Label Text="{Binding Statut}" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <ImageButton Source="delete_icon.png" Clicked="OnDeleteButtonClicked" CommandParameter="{Binding UserId}" HorizontalOptions="End" BackgroundColor="red"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Formulaire -->
+        <StackLayout Padding="20">
+            <Entry x:Name="IdEntry" Placeholder="ID" Margin="5"/>
+            <Entry x:Name="NomEntry" Placeholder="Nom" Margin="5"/>
+            <Entry x:Name="PrenomEntry" Placeholder="Prénom" Margin="5"/>
+            <Picker x:Name="StatutPicker" Title="Statut" Margin="5">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Membre</x:String>
+                        <x:String>Admin</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Button Text="Valider" Clicked="OnValidateButtonClicked" Margin="5"/>
+            <Button Text="Annuler" Clicked="OnClearButtonClicked" Margin="5"/>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>

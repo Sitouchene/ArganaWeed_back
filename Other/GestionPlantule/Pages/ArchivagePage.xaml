@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GestionPlantule.Pages.ArchivagePage">
+
+    <StackLayout Padding="20">
+        <Label Text="Archivage des Plantules" FontSize="24" HorizontalOptions="Center" Margin="10"/>
+
+        <!-- Barre de recherche -->
+        <SearchBar x:Name="SearchBar" Placeholder="Rechercher..." TextChanged="OnSearchBarTextChanged"/>
+
+        <!-- ListView -->
+        <ListView x:Name="ItemsListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" Padding="10">
+                            <Label Text="{Binding PlantuleVariete}" FontAttributes="Bold"/>
+                            <Label Text="{Binding PlantuleDescription}" FontAttributes="Italic"/>
+                            <Label Text="{Binding DateReception}" FontAttributes="Italic"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
