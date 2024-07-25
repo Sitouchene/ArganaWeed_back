@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArganaWeed_Api
+namespace ArganaWeedApi
 {
     public class LoginRequest : BaseRequest
     {

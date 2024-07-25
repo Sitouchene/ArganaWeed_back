@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ArganaWeed_Api.Data;
+using ArganaWeedApi.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ArganaWeed_Api.Models;
+using ArganaWeedApi.Models;
+using Microsoft.AspNetCore.Authorization;
 
-namespace ArganaWeedd_Api.Controllers
+namespace ArganaWeedApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VarieteController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;

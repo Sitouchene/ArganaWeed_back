@@ -1,51 +1,67 @@
-﻿using ArganaWeed_Api.Models;
-using ArganaWeed_Api.Services;
+﻿
+//using ArganaWeedModels;
+using ArganaWeedApi.Models;
+using ArganaWeedApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ArganaWeed_Api.Controllers
+namespace ArganaWeedApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration _config;
-        private readonly JwtService _jwtService;
+        private readonly IUserService _userService;
+        private readonly IJwtService _jwtService;
 
-        public AuthController(IConfiguration config, JwtService jwtService)
+        public AuthController(IUserService userService, IJwtService jwtService)
         {
-            _config = config;
+            _userService = userService;
             _jwtService = jwtService;
         }
-        /*
-        [HttpPost("login")]
-        public async Task<LoginResponse> Login(LoginRequest request)
-        {
-            // Remplacez par votre logique d'authentification (ex. vérification des utilisateurs en DB)
-            LoginResponse loginResponse= new LoginResponse();
-
-            if (request.Email == "test@example.com" && request.Password == "password")
-            {
-                loginResponse.Message = "Succes";
-            }
-            else loginResponse.Message = "Fail!";
-            return loginResponse;
-           
-        }
-        */
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] AuthRequest request)
+        public async Task<IActionResult> Login([FromBody] AuthRequest request)
         {
-            // Remplacez par votre logique d'authentification (ex. vérification des utilisateurs en DB)
-            if (request.Email == "test@example.com" && request.Password == "password")
+            var (authenticated, message, currentUser, userId, roles) = await _userService.AuthenticateUserAsync(request.Email, request.Password);
+
+            if (authenticated)
             {
-                var token = _jwtService.GenerateSecurityToken(request.Email);
-                return Ok(new AuthResponse { Token = token });
+                var token = _jwtService.GenerateSecurityToken(request.Email, roles);
+
+                return Ok(new AuthResponse
+                {
+                    Token = token,
+                    Roles = roles,
+                    CurrentUser = currentUser,
+                    UserId = userId
+                });
             }
 
-            return Unauthorized();
+            return Unauthorized(new { Message = message });
         }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            // Renvoyer simplement une confirmation de la déconnexion.
+            return Ok(new { Message = "Déconnexion réussie" });
+        }
+
+        [HttpPost("refresh")]
+        public IActionResult RefreshToken([FromBody] TokenRequest tokenRequest)
+        {
+            // Valider le token existant et extraire les informations nécessaires (ici simplifié)
+            var userInfo = _jwtService.DecodeToken(tokenRequest.Token); // Supposons que cette méthode décode le token
+            if (userInfo == null)
+            {
+                return Unauthorized(new { Message = "Invalid token" });
+            }
+
+            var newToken = _jwtService.GenerateSecurityToken(userInfo.Email, userInfo.Roles);
+            return Ok(new { Token = newToken });
+        }
+
     }
 }

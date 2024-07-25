@@ -1,12 +1,12 @@
-using ArganaWeed_Api.Data;
+using ArganaWeedApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using ArganaWeed_Api.Services;  // Ajouter cette ligne pour l'intégration Swagger
+using ArganaWeedApi.Services;  // Ajouter cette ligne pour l'intégration Swagger
 
-namespace ArganaWeed_Api
+namespace ArganaWeedApi
 {
     public class Program
     {
@@ -14,7 +14,7 @@ namespace ArganaWeed_Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Ajouter la configuration pour JWT
+            // Configuration pour JWT
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -29,17 +29,18 @@ namespace ArganaWeed_Api
                     };
                 });
 
-            // Enregistrement de JwtService
-            builder.Services.AddSingleton<JwtService>();
+            // Enregistrement de JwtService avec IJwtService
+            builder.Services.AddSingleton<IJwtService, JwtService>();
+
+            // Enregistrement de UserService avec IUserService
+            builder.Services.AddScoped<IUserService, UserService>();
 
             // Configuration de DbContext
             builder.Services.AddDbContext<ArganaWeedDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-
             builder.Services.AddControllers();
-            
+
             builder.Services.AddEndpointsApiExplorer();
 
             // Configuration de Swagger

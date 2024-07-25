@@ -1,4 +1,4 @@
-﻿namespace ArganaWeed_Api.Models
+﻿namespace ArganaWeedApi.Models
 {
     public class Provenance
     {

@@ -1,11 +1,12 @@
-﻿using ArganaWeed_Api.Models;
+﻿using ArganaWeedApi.Models;
+using ArganaWeedApi.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace ArganaWeed_Api.Data
+namespace ArganaWeedApi.Data
 {
     public class ArganaWeedDbContext : DbContext
     {
@@ -25,7 +26,9 @@ namespace ArganaWeed_Api.Data
         public DbSet<PlantulesParStade> PlantulesParStade { get; set; }
         public DbSet<PlantulesParSante> PlantulesParSante { get; set; }
         public DbSet<EvolutionMensuellePlantules> EvolutionMensuellePlantules { get; set; }
+        //Authentification
 
+        public DbSet<AuthResult> AuthResults { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -84,9 +87,13 @@ namespace ArganaWeed_Api.Data
                 .ToView("vwEvolutionMensuellePlantules")
                 .HasNoKey();
 
+            // Configuration pour AuthResult
+            modelBuilder.Entity<AuthResult>().HasNoKey();
 
 
             base.OnModelCreating(modelBuilder);
+
+            
         }
 
         // Users

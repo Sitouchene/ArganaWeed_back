@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ArganaWeedApp.Controls"
+
+             x:Class="ArganaWeedApp.Views.MainPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource 
+                    FontFamily="MaterialIcons-Regular"
+                    Glyph="&#xe7fd;" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <StackLayout Padding="10" Spacing="10" BackgroundColor="Black" VerticalOptions="FillAndExpand">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Image Source="arganalogo.png" HeightRequest="80" HorizontalOptions="Start" />
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="Bienvenue dans Argana Weed"
+                           FontSize="Subtitle"
+                           HorizontalOptions="Center"
+                           TextColor="Snow" />
+
+                    <Label Text="L'application qui facilite la gestion de culture cannabis"
+                           
+                           HorizontalOptions="Center" 
+                           TextColor="Snow" />          
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <!-- Animated Logo -->
+            
+
+            
+
+
+            <!-- Expander 2 -->
+            <StackLayout>
+                
+                 <local:CustomExpander HeaderText="BIO-INNOVATION (CAT-B)">
+                    <Grid ColumnSpacing="5" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="biocat.png" Grid.RowSpan="2" 
+                               HorizontalOptions="Center" VerticalOptions="Start" WidthRequest="80"/>
+                        <Button Text="Lire plus" Clicked="OnLirePlusClicked" Grid.Row="1" Grid.Column="0"
+                                 HorizontalOptions="Center" VerticalOptions="End"/>
+
+                        <Label Text="Le Centre d’accès à la technologie en bio-innovation (CAT-B) de La Cité contribue au secteur de la biotechnologie en accélérant l’innovation dans les entreprises par le soutien au développement et à l’amélioration des produits. Notre modèle d’affaires repose sur un partenariat avec l’industrie pour de la recherche appliquée, cofinancé par des fonds publics et privés, dans lequel la propriété intellectuelle des prototypes est transférée aux entreprises. L’équipe du CAT-B est constituée de personnel de recherche, de professeurs chercheurs et d’étudiants du Baccalauréat spécialisé en biotechnologie qui travaillent en étroite collaboration avec les entreprises privées et institutions partenaires."
+                               LineBreakMode="WordWrap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" 
+                               HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" />
+                    </Grid>
+                </local:CustomExpander>
+            </StackLayout>
+
+
+
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

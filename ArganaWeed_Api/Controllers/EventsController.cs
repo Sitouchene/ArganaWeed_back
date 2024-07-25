@@ -1,14 +1,15 @@
-﻿using ArganaWeed_Api.Data;
-using ArganaWeed_Api.Models;
+﻿using ArganaWeedApi.Data;
+using ArganaWeedApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ArganaWeed_Api.Controllers
+namespace ArganaWeedApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EventsController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;
@@ -20,6 +21,7 @@ namespace ArganaWeed_Api.Controllers
 
        
         [HttpGet("{id}")]
+        [Authorize(Roles = "Administrator, Owner, Viewer, Agent")]
         public async Task<ActionResult<Event>> GetEventById(int id)
         {
             var @event = await _context.GetEventByIdAsync(id);

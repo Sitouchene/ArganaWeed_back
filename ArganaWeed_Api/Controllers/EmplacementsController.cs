@@ -1,11 +1,11 @@
-﻿using ArganaWeed_Api.Data;
-using ArganaWeed_Api.Models;
+﻿using ArganaWeedApi.Data;
+using ArganaWeedApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ArganaWeed_Api.Controllers
+namespace ArganaWeedApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,7 +20,7 @@ namespace ArganaWeed_Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "Owner, Viewer, Agent")]
         public async Task<ActionResult<IEnumerable<Emplacement>>> GetAllEmplacements()
         {
             var emplacements = await _context.GetAllEmplacementsAsync();
@@ -28,7 +28,7 @@ namespace ArganaWeed_Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Owner, Viewer, Agent")]
         public async Task<ActionResult<Emplacement>> GetEmplacementById(int id)
         {
             var emplacement = await _context.GetEmplacementByIdAsync(id);
@@ -39,8 +39,8 @@ namespace ArganaWeed_Api.Controllers
             return Ok(emplacement);
         }
 
-        
         [HttpPost]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult<string>> AddEmplacement([FromBody] Emplacement emplacement)
         {
             if (emplacement == null)
@@ -52,8 +52,8 @@ namespace ArganaWeed_Api.Controllers
             return Ok(message);
         }
 
-
         [HttpPut("{id}")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult<string>> UpdateEmplacement(int id, [FromBody] Emplacement emplacement)
         {
             if (emplacement == null)
@@ -66,19 +66,21 @@ namespace ArganaWeed_Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult<string>> DeleteEmplacement(int id)
         {
             var message = await _context.DeleteEmplacementByIdAsync(id);
             return Ok(message);
         }
 
-        
         [HttpGet("search/{searchString}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Owner, Viewer, Agent")]
         public async Task<ActionResult<IEnumerable<Emplacement>>> SearchEmplacement(string searchString)
         {
             var emplacements = await _context.SearchEmplacementAsync(searchString);
             return Ok(emplacements);
         }
+
+
     }
 }

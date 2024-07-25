@@ -1,10 +1,12 @@
-﻿namespace ArganaWeed_Api.Models
+﻿namespace ArganaWeedApi.Models
 {
     public class User
     {
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string HashedPassword { get; set; }
+        public string Salt { get; set; }
+
         public string UserEmail { get; set; }
         public bool IsAdministrator { get; set; }
         public bool IsOwner { get; set; }

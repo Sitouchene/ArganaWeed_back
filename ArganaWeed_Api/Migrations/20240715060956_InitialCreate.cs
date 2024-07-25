@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ArganaWeed_Api.Migrations
+namespace ArganaWeedApi.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
