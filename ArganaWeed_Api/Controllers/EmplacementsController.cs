@@ -20,17 +20,19 @@ namespace ArganaWeedApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Owner, Viewer, Agent")]
-        public async Task<ActionResult<IEnumerable<Emplacement>>> GetAllEmplacements()
+        public async Task<EmplacementResponse> GetAllEmplacements()
         {
-            var emplacements = await _context.GetAllEmplacementsAsync();
-            return Ok(emplacements);
+         EmplacementResponse  emplacementResponse  = new  EmplacementResponse ();   
+         var emplacements = await _context.GetAllEmplacementsAsync();
+         emplacementResponse.emplacements=emplacements;
+         return emplacementResponse;
+         
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Owner, Viewer, Agent")]
         public async Task<ActionResult<Emplacement>> GetEmplacementById(int id)
         {
+        EmplacementResponse 
             var emplacement = await _context.GetEmplacementByIdAsync(id);
             if (emplacement == null)
             {
