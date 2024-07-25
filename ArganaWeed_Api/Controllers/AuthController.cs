@@ -21,6 +21,39 @@ namespace ArganaWeedApi.Controllers
             _jwtService = jwtService;
         }
 
+         [HttpPost("login")]
+        public async Task<LoginResponse> Login2([FromBody] LoginRequest request)
+        {
+            LoginResponse loginResponse = new LoginResponse();
+          
+            var (authenticated, message, currentUser, userId, roles) = await _userService.AuthenticateUserAsync(request.Email, request.Password);
+
+            if (authenticated)
+            {
+
+             loginResponse.success = true;
+              var token = _jwtService.GenerateSecurityToken(request.Email, roles);
+
+             // assign values
+                return  new loginResponse
+                {
+                    Token = token,
+                    Roles = roles,
+                    CurrentUser = currentUser,
+                    UserId = userId
+                });
+            }
+            else{
+             loginResponse.success = false;
+             loginResponse.message = "Invalid user or password !";
+
+         
+            
+            }
+
+            return loginresponse;
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] AuthRequest request)
         {
