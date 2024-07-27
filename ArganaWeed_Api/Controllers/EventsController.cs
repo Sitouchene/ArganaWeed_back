@@ -1,15 +1,16 @@
-﻿using ArganaWeedApi.Data;
-using ArganaWeedApi.Models;
+﻿using ArganaWeedApp.Data;
+using ArganaWeedApp.DTOs;
+using ArganaWeedApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ArganaWeedApi.Controllers
+namespace ArganaWeedApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class EventsController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;
@@ -19,64 +20,55 @@ namespace ArganaWeedApi.Controllers
             _context = context;
         }
 
-       
-        [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator, Owner, Viewer, Agent")]
-        public async Task<ActionResult<Event>> GetEventById(int id)
-        {
-            var @event = await _context.GetEventByIdAsync(id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-            return Ok(@event);
-        }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetAllEvents()
+        public async Task<EventsResponse> GetAllEvents()
         {
-            var events = await _context.GetAllEventsAsync();
-            return Ok(events);
+            return await _context.GetAllEventsAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<EventsResponse> GetEventById(int id)
+        {
+            return await _context.GetEventByIdAsync(id);
         }
 
         [HttpGet("plantule/{plantuleId}")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByPlantuleId(int plantuleId)
+        public async Task<EventsResponse> GetEventsByPlantuleId(int plantuleId)
         {
-            var events = await _context.GetEventsByPlantuleIdAsync(plantuleId);
-            return Ok(events);
+            return await _context.GetEventsByPlantuleIdAsync(plantuleId);
         }
 
         [HttpGet("date/{eventDate}")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByDate(string eventDate)
+        public async Task<ActionResult<EventsResponse>> GetEventsByDate(string eventDate)
         {
             if (DateTime.TryParse(eventDate, out DateTime parsedDate))
             {
-                var events = await _context.GetEventByDateAsync(parsedDate);
-                return Ok(events);
+                var eventsResponse = await _context.GetEventByDateAsync(parsedDate);
+                return Ok(eventsResponse);
             }
             return BadRequest("Invalid date format.");
         }
 
         [HttpGet("username/{userName}")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByUserName(string userName)
+        public async Task<EventsResponse> GetEventsByUserName(string userName)
         {
-            var events = await _context.GetEventsByUserNameAsync(userName);
-            return Ok(events);
+            return await _context.GetEventsByUserNameAsync(userName);
         }
 
         [HttpGet("type/{eventType}")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByType(string eventType)
+        public async Task<EventsResponse> GetEventsByType(string eventType)
         {
-            var events = await _context.GetEventsByTypeAsync(eventType);
-            return Ok(events);
+            return await _context.GetEventsByTypeAsync(eventType);
         }
 
         [HttpGet("nature/{eventNature}")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByNature(string eventNature)
+        public async Task<EventsResponse> GetEventsByNature(string eventNature)
         {
-            var events = await _context.GetEventsByNatureAsync(eventNature);
-            return Ok(events);
+            return await _context.GetEventsByNatureAsync(eventNature);
         }
+
+
 
         [HttpPost]
         public async Task<ActionResult<string>> AddEvent([FromBody] EventRequest request)
@@ -92,6 +84,7 @@ namespace ArganaWeedApi.Controllers
             );
             return Ok(message);
         }
+
 
         public class EventRequest
         {

@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ArganaWeedApi.Data;
-using ArganaWeedApi.Models;
+using ArganaWeedApp.Data;
+using ArganaWeedApp.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ArganaWeedApi.Data;
+using ArganaWeedApp.Data;
 using Microsoft.AspNetCore.Authorization;
+using ArganaWeedApp.DTOs;
 
-namespace ArganaWeedApi.Controllers
+namespace ArganaWeedApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class ProvenanceController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;
@@ -19,6 +20,26 @@ namespace ArganaWeedApi.Controllers
         {
             _context = context;
         }
+
+        [HttpGet]
+        public async Task<ProvenancesResponse> GetAllProvenances()
+        {
+            return await _context.GetAllProvenancesAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ProvenancesResponse> GetProvenanceById(int id)
+        {
+            return await _context.GetProvenanceByIdAsync(id);
+        }
+
+        [HttpGet("search/{searchString}")]
+        public async Task<ActionResult<ProvenancesResponse>> SearchProvenance(string searchString)
+        {
+            var provenancesResponse = await _context.SearchProvenanceAsync(searchString);
+            return Ok(provenancesResponse);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<string>> AddProvenance(Provenance provenance)
@@ -34,24 +55,6 @@ namespace ArganaWeedApi.Controllers
             return Ok(message);
         }
 
-        [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Provenance>>> GetAllProvenances()
-        {
-            var provenances = await _context.GetAllProvenancesAsync();
-            return Ok(provenances);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Provenance>> GetProvenanceById(int id)
-        {
-            var provenance = await _context.GetProvenanceByIdAsync(id);
-            if (provenance == null)
-            {
-                return NotFound();
-            }
-            return Ok(provenance);
-        }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<string>> DeleteProvenanceById(int id)
@@ -60,11 +63,6 @@ namespace ArganaWeedApi.Controllers
             return Ok(message);
         }
 
-        [HttpGet("search/{searchString}")]
-        public async Task<ActionResult<IEnumerable<Provenance>>> SearchProvenance(string searchString)
-        {
-            var provenances = await _context.SearchProvenanceAsync(searchString);
-            return Ok(provenances);
-        }
+
     }
 }

@@ -1,12 +1,12 @@
-﻿using ArganaWeedApi.Data;
-using ArganaWeedApi.Models;
+﻿using ArganaWeedApp.Data;
+using ArganaWeedApp.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ArganaWeedApi.Services
+namespace ArganaWeedApp.Services
 {
     public class UserService : IUserService
     {

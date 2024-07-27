@@ -12,10 +12,11 @@ namespace ArganaWeedApp.Views
             
         }
 
-        private void ToolbarItem_Clicked(object sender, EventArgs e)
+        private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
             // Naviguer vers la page de connexion
-            Navigation.PushAsync(new LoginPage());
+            //Navigation.PushAsync(new LoginPage());
+            await Shell.Current.GoToAsync("//LoginPage");
         }
 
         

@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ArganaWeedApi.Data;
+using ArganaWeedApp.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ArganaWeedApi.Models;
+using ArganaWeedApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using ArganaWeedApp.DTOs;
 
-namespace ArganaWeedApi.Controllers
+namespace ArganaWeedApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class VarieteController : ControllerBase
+    //[Authorize]
+    public class VarietesController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;
 
-        public VarieteController(ArganaWeedDbContext context)
+        public VarietesController(ArganaWeedDbContext context)
         {
             _context = context;
         }
@@ -33,36 +34,35 @@ namespace ArganaWeedApi.Controllers
             return Ok(message);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Variete>>> GetAllVarietes()
-        {
-            var varietes = await _context.GetAllVarietesAsync();
-            return Ok(varietes);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Variete>> GetVarieteById(int id)
-        {
-            var variete = await _context.GetVarieteByIdAsync(id);
-            if (variete == null)
-            {
-                return NotFound();
-            }
-            return Ok(variete);
-        }
-
-        [HttpDelete("{id}")]
+       [HttpDelete("{id}")]
         public async Task<ActionResult<string>> DeleteVarieteById(int id)
         {
             var message = await _context.DeleteVarieteByIdAsync(id);
             return Ok(message);
         }
 
-        [HttpGet("search/{searchString}")]
-        public async Task<ActionResult<IEnumerable<Variete>>> SearchVariete(string searchString)
+
+        //******* GET
+
+        [HttpGet]
+        public async Task<VarietesResponse> GetAllVarietes()
         {
-            var varietes = await _context.SearchVarieteAsync(searchString);
-            return Ok(varietes);
+            return await _context.GetAllVarietesAsync();
         }
+
+        [HttpGet("{id}")]
+        public async Task<VarietesResponse> GetVarieteById(int id)
+        {
+            return await _context.GetVarieteByIdAsync(id);
+        }
+
+        [HttpGet("search/{searchString}")]
+        public async Task<VarietesResponse> SearchVariete(string searchString)
+        {
+            return await _context.SearchVarieteAsync(searchString);
+        }
+
+
+
     }
 }

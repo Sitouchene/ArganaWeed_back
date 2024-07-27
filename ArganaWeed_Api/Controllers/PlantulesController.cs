@@ -1,15 +1,16 @@
-﻿using ArganaWeedApi.Data;
-using ArganaWeedApi.Models;
+﻿using ArganaWeedApp.Data;
+using ArganaWeedApp.DTOs;
+using ArganaWeedApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ArganaWeedApi.Controllers
+namespace ArganaWeedApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class PlantulesController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;
@@ -19,6 +20,56 @@ namespace ArganaWeedApi.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<PlantulesDetailResponse> GetAllPlantules()
+        {
+            return await _context.GetAllPlantulesAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<PlantulesDetailResponse> GetPlantuleById(int id)
+        {
+            return await _context.GetPlantuleByIdAsync(id);
+        }
+
+        [HttpGet("search/{searchString}")]
+        public async Task<ActionResult<PlantulesDetailResponse>> SearchPlantules(string searchString)
+        {
+            var plantulesResponse = await _context.SearchPlantulesAsync(searchString);
+            return Ok(plantulesResponse);
+        }
+
+        [HttpGet("slug/{slug}")]
+        public async Task<PlantulesDetailResponse> GetPlantuleBySlug(string slug)
+        {
+            return await _context.GetPlantuleBySlugAsync(slug);
+        }
+
+        [HttpGet("variete/{varieteCode}")]
+        public async Task<PlantulesDetailResponse> GetPlantuleByVariete(string varieteCode)
+        {
+            return await _context.GetPlantuleByVarieteAsync(varieteCode);
+        }
+
+        [HttpGet("active")]
+        public async Task<PlantulesDetailResponse> GetPlantulesActive()
+        {
+            return await _context.GetPlantulesActiveAsync();
+        }
+
+        [HttpGet("inactive")]
+        public async Task<PlantulesDetailResponse> GetPlantulesInactive()
+        {
+            return await _context.GetPlantulesInactiveAsync();
+        }
+
+        [HttpGet("archived")]
+        public async Task<PlantulesDetailResponse> GetPlantulesArchived()
+        {
+            return await _context.GetPlantulesArchivedAsync();
+        }
+
+        /*
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PlantuleDetail>>> GetAllPlantules()
         {
@@ -81,7 +132,7 @@ namespace ArganaWeedApi.Controllers
             var plantules = await _context.GetPlantuleByVarieteAsync(varieteCode);
             return Ok(plantules);
         }
-
+        */
         [HttpPost]
         public async Task<ActionResult<string>> AddPlantule([FromBody] PlantuleAddRequest request)
         {

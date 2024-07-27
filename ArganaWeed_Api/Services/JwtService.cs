@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ArganaWeedApi.Models;
+using ArganaWeedApp.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ArganaWeedApi.Services
+namespace ArganaWeedApp.Services
 {
     public class JwtService : IJwtService
     {

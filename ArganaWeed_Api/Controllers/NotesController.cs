@@ -1,16 +1,17 @@
-﻿using ArganaWeedApi.Data;
-using ArganaWeedApi.Models;
+﻿using ArganaWeedApp.Data;
+using ArganaWeedApp.DTOs;
+using ArganaWeedApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ArganaWeedApi.Controllers
+namespace ArganaWeedApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class NotesController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;
@@ -20,48 +21,44 @@ namespace ArganaWeedApi.Controllers
             _context = context;
         }
 
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Note>>> GetAllNotes()
+        public async Task<NotesResponse> GetAllNotes()
         {
-            var notes = await _context.GetAllNotesAsync();
-            return Ok(notes);
+            return await _context.GetAllNotesAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Note>> GetNoteById(int id)
+        public async Task<NotesResponse> GetNoteById(int id)
         {
-            var note = await _context.GetNoteByIdAsync(id);
-            if (note == null)
-            {
-                return NotFound();
-            }
-            return Ok(note);
+            return await _context.GetNoteByIdAsync(id);
         }
 
         [HttpGet("plantule/{plantuleId}")]
-        public async Task<ActionResult<IEnumerable<Note>>> GetNotesByPlantuleId(int plantuleId)
+        public async Task<NotesResponse> GetNotesByPlantuleId(int plantuleId)
         {
-            var notes = await _context.GetNotesByPlantuleIdAsync(plantuleId);
-            return Ok(notes);
+            return await _context.GetNotesByPlantuleIdAsync(plantuleId);
         }
 
         [HttpGet("date/{noteDate}")]
-        public async Task<ActionResult<IEnumerable<Note>>> GetNotesByDate(string noteDate)
+        public async Task<ActionResult<NotesResponse>> GetNotesByDate(string noteDate)
         {
             if (DateTime.TryParse(noteDate, out DateTime parsedDate))
             {
-                var notes = await _context.GetNotesByDateAsync(parsedDate);
-                return Ok(notes);
+                var notesResponse = await _context.GetNotesByDateAsync(parsedDate);
+                return Ok(notesResponse);
             }
             return BadRequest("Invalid date format.");
         }
 
         [HttpGet("username/{userName}")]
-        public async Task<ActionResult<IEnumerable<Note>>> GetNotesByUserName(string userName)
+        public async Task<NotesResponse> GetNotesByUserName(string userName)
         {
-            var notes = await _context.GetNotesByUserNameAsync(userName);
-            return Ok(notes);
+            return await _context.GetNotesByUserNameAsync(userName);
         }
+
+
+
 
         [HttpPost]
         public async Task<ActionResult<string>> AddNote([FromBody] NoteRequest request)

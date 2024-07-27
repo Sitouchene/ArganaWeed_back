@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArganaWeedApp.Views.EmplacementDetailPage"
+             Title="Détail de l'emplacement">
+
+    <StackLayout Padding="10">
+        <Entry Placeholder="Code d'emplacement" x:Name="CodeEntry" />
+        <Entry Placeholder="Description d'emplacement" x:Name="DescriptionEntry" />
+        <Button Text="Modifier" />
+        <Button Text="Supprimer" />
+        <Button Text="Quitter" Clicked="OnQuitClicked" />
+    </StackLayout>
+</ContentPage>

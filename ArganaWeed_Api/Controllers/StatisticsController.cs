@@ -1,16 +1,16 @@
-﻿using ArganaWeedApi.Data;
-using ArganaWeedApi.Models;
+﻿using ArganaWeedApp.Data;
+using ArganaWeedApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ArganaWeedApi.Controllers
+namespace ArganaWeedApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class StatisticsController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;

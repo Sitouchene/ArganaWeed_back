@@ -1,15 +1,16 @@
-﻿using ArganaWeedApi.Data;
-using ArganaWeedApi.Models;
+﻿using ArganaWeedApp.Data;
+using ArganaWeedApp.DTOs;
+using ArganaWeedApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ArganaWeedApi.Controllers
+namespace ArganaWeedApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   
     public class EmplacementsController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;
@@ -19,30 +20,31 @@ namespace ArganaWeedApi.Controllers
             _context = context;
         }
 
+
         [HttpGet]
-        public async Task<EmplacementResponse> GetAllEmplacements()
+        public async Task<EmplacementsResponse> GetAllEmplacements()
         {
-         EmplacementResponse  emplacementResponse  = new  EmplacementResponse ();   
-         var emplacements = await _context.GetAllEmplacementsAsync();
-         emplacementResponse.emplacements=emplacements;
-         return emplacementResponse;
-         
+            return await _context.GetAllEmplacementsAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Emplacement>> GetEmplacementById(int id)
+        public async Task<EmplacementsResponse> GetEmplacementById(int id)
         {
-        EmplacementResponse 
-            var emplacement = await _context.GetEmplacementByIdAsync(id);
-            if (emplacement == null)
-            {
-                return NotFound();
-            }
-            return Ok(emplacement);
+            return await _context.GetEmplacementByIdAsync(id);
         }
 
+
+
+        [HttpGet("search/{searchString}")]
+        public async Task<ActionResult<EmplacementsResponse>> SearchEmplacement(string searchString)
+        {
+            var emplacementsResponse = await _context.SearchEmplacementAsync(searchString);
+            return Ok(emplacementsResponse);
+        }
+
+       
         [HttpPost]
-        [Authorize(Roles = "Owner")]
+        //[Authorize(Roles = "Owner")]
         public async Task<ActionResult<string>> AddEmplacement([FromBody] Emplacement emplacement)
         {
             if (emplacement == null)
@@ -75,13 +77,7 @@ namespace ArganaWeedApi.Controllers
             return Ok(message);
         }
 
-        [HttpGet("search/{searchString}")]
-        [Authorize(Roles = "Owner, Viewer, Agent")]
-        public async Task<ActionResult<IEnumerable<Emplacement>>> SearchEmplacement(string searchString)
-        {
-            var emplacements = await _context.SearchEmplacementAsync(searchString);
-            return Ok(emplacements);
-        }
+
 
 
     }

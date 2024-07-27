@@ -1,4 +1,4 @@
-namespace ArganaWeedApi
+namespace ArganaWeedApp
 {
     public class WeatherForecast
     {

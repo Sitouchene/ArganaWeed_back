@@ -7,7 +7,7 @@
     <Grid >
         <Image Source="cannabisbg.jpg" Aspect="AspectFit"  />
 
-        <StackLayout Padding="30" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" >
+        <StackLayout Padding="30" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" MinimumWidthRequest="400">
 
             <Entry Placeholder="Nom d'utilisateur ou Email"
                    x:Name="UsernameEntry"
@@ -34,10 +34,17 @@
                     
 
                     <Label x:Name="MessageLabel"
-                           Text="Ici le message d'echec ou de connexion"
+                           Text=""
                    TextColor="Red"
                    HorizontalOptions="Center"
                    VerticalOptions="CenterAndExpand" />
+            
+                
+                
+
+
+
+
         </StackLayout>
     </Grid>
 

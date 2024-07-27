@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DevExpress.Maui;
+using Microsoft.Extensions.Logging;
 
 namespace ArganaWeedApp
 {
@@ -9,6 +10,11 @@ namespace ArganaWeedApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseDevExpress()
+                .UseDevExpressControls()
+                .UseDevExpressCollectionView()
+                .UseDevExpressEditors()
+                .UseDevExpressDataGrid()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -17,7 +23,7 @@ namespace ArganaWeedApp
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

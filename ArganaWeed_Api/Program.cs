@@ -1,12 +1,12 @@
-using ArganaWeedApi.Data;
+using ArganaWeedApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using ArganaWeedApi.Services;  // Ajouter cette ligne pour l'intégration Swagger
+using ArganaWeedApp.Services;  // Ajouter cette ligne pour l'intégration Swagger
 
-namespace ArganaWeedApi
+namespace ArganaWeedApp
 {
     public class Program
     {

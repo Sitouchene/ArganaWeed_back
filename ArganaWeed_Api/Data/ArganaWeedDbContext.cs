@@ -1,12 +1,12 @@
-﻿using ArganaWeedApi.Models;
-using ArganaWeedApi.Services;
+﻿using ArganaWeedApp.Models;
+using ArganaWeedApp.DTOs;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
 
-namespace ArganaWeedApi.Data
+namespace ArganaWeedApp.Data
 {
     public class ArganaWeedDbContext : DbContext
     {
@@ -27,7 +27,6 @@ namespace ArganaWeedApi.Data
         public DbSet<PlantulesParSante> PlantulesParSante { get; set; }
         public DbSet<EvolutionMensuellePlantules> EvolutionMensuellePlantules { get; set; }
         //Authentification
-
         public DbSet<AuthResult> AuthResults { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -61,11 +60,9 @@ namespace ArganaWeedApi.Data
                 .WithMany()
                 .HasForeignKey(e => e.PlantuleId);
 
-            //modelBuilder.Entity<Plantule>().ToView("vwPlantuleDetails");
-            
             modelBuilder.Entity<PlantuleDetail>()
-           .ToView("vwPlantuleDetails")
-           .HasKey(p => p.PlantuleId);
+                .ToView("vwPlantuleDetails")
+                .HasKey(p => p.PlantuleId);
 
             modelBuilder.Entity<PlantulesStats>()
                 .ToView("vwPlantulesStats")
@@ -87,31 +84,37 @@ namespace ArganaWeedApi.Data
                 .ToView("vwEvolutionMensuellePlantules")
                 .HasNoKey();
 
-            // Configuration pour AuthResult
             modelBuilder.Entity<AuthResult>().HasNoKey();
 
-
             base.OnModelCreating(modelBuilder);
-
-            
         }
 
-        // Users
-
-        public async Task<List<User>> GetAllUsersAsync()
+        #region Users
+        public async Task<UsersResponse> GetAllUsersAsync()
         {
-            return await Users.FromSqlRaw("EXEC getAllUsers").ToListAsync();
+            var users = await Users.FromSqlRaw("EXEC getAllUsers").ToListAsync();
+            return new UsersResponse
+            {
+                Items = users
+            };
         }
 
-        public async Task<List<User>> SearchUsersAsync(string searchString)
-        {
-            return await Users.FromSqlRaw("EXEC searchUsers @p0", searchString).ToListAsync();
-        }
-
-        public async Task<User> GetUserByIdAsync(int userId)
+        public async Task<UsersResponse> GetUserByIdAsync(int userId)
         {
             var users = await Users.FromSqlRaw("EXEC getUserById @p0", userId).ToListAsync();
-            return users.Count > 0 ? users[0] : null;
+            return new UsersResponse
+            {
+                Items = users
+            };
+        }
+
+        public async Task<UsersResponse> SearchUsersAsync(string searchString)
+        {
+            var users = await Users.FromSqlRaw("EXEC searchUsers @p0", searchString).ToListAsync();
+            return new UsersResponse
+            {
+                Items = users
+            };
         }
 
         public async Task<string> AddUserAsync(string userName, string userEmail, string userPassword, bool isAdministrator, bool isOwner, bool isAgent, bool isViewer, bool isActive)
@@ -165,8 +168,37 @@ namespace ArganaWeedApi.Data
                 userId, currentPassword, newPassword, confirmPassword, role);
             return "Le mot de passe a été modifié avec succès!";
         }
+        #endregion
 
-        // PROVENANCES
+        #region Provenances
+        public async Task<ProvenancesResponse> GetAllProvenancesAsync()
+        {
+            var provenances = await Provenances.FromSqlRaw("EXEC getAllProvenances").ToListAsync();
+            return new ProvenancesResponse
+            {
+                Items = provenances
+            };
+        }
+
+
+
+        public async Task<ProvenancesResponse> GetProvenanceByIdAsync(int provenanceId)
+        {
+            var provenances = await Provenances.FromSqlRaw("EXEC getProvenanceById @p0", provenanceId).ToListAsync();
+            return new ProvenancesResponse
+            {
+                Items = provenances
+            };
+        }
+
+        public async Task<ProvenancesResponse> SearchProvenanceAsync(string searchString)
+        {
+            var provenances = await Provenances.FromSqlRaw("EXEC searchProvenance @p0", searchString).ToListAsync();
+            return new ProvenancesResponse
+            {
+                Items = provenances
+            };
+        }
 
         public async Task<string> AddProvenanceAsync(string provenanceNom, string provenanceDescription)
         {
@@ -184,81 +216,149 @@ namespace ArganaWeedApi.Data
             return "Provenance mise à jour avec succès!";
         }
 
-        public async Task<List<Provenance>> GetAllProvenancesAsync()
-        {
-            return await Provenances.FromSqlRaw("EXEC getAllProvenances").ToListAsync();
-        }
-
-        public async Task<Provenance> GetProvenanceByIdAsync(int provenanceId)
-        {
-            var provenances = await Provenances.FromSqlRaw("EXEC getProvenanceById @p0", provenanceId).ToListAsync();
-            return provenances.Count > 0 ? provenances[0] : null;
-        }
-
         public async Task<string> DeleteProvenanceByIdAsync(int provenanceId)
         {
             await Database.ExecuteSqlRawAsync(
                 "EXEC deleteProvenanceById @p0", provenanceId);
             return "Provenance supprimée avec succès!";
         }
+        #endregion
 
-        public async Task<List<Provenance>> SearchProvenanceAsync(string searchString)
+        #region Emplacements
+        public async Task<EmplacementsResponse> GetAllEmplacementsAsync()
         {
-            return await Provenances.FromSqlRaw("EXEC searchProvenance @p0", searchString).ToListAsync();
+            var emplacements = await Emplacements.FromSqlRaw("EXEC getAllEmplacements").ToListAsync();
+            return new EmplacementsResponse
+            {
+                Items = emplacements
+            };
         }
 
-        // Variete
-        public async Task<string> AddVarieteAsync(string varieteCode, string varieteNom, string varieteDescription, string varieteCategorie)
+        public async Task<EmplacementsResponse> GetEmplacementByIdAsync(int emplacementId)
         {
-            await Database.ExecuteSqlRawAsync(
-                "EXEC addVariete @p0, @p1, @p2, @p3",
-                varieteCode, varieteNom, varieteDescription, varieteCategorie);
-            return "Variété ajoutée avec succès!";
+            var emplacements = await Emplacements.FromSqlRaw("EXEC getEmplacementById @p0", emplacementId).ToListAsync();
+            return new EmplacementsResponse
+            {
+                Items = emplacements
+            };
         }
 
-        public async Task<string> UpdateVarieteAsync(int varieteId, string varieteCode, string varieteNom, string varieteDescription, string varieteCategorie)
+        public async Task<EmplacementsResponse> SearchEmplacementAsync(string searchString)
         {
-            await Database.ExecuteSqlRawAsync(
-                "EXEC updateVariete @p0, @p1, @p2, @p3, @p4",
-                varieteId, varieteCode, varieteNom, varieteDescription, varieteCategorie);
-            return "Variété mise à jour avec succès!";
+            var emplacements = await Emplacements.FromSqlRaw("EXEC searchEmplacement @p0", searchString).ToListAsync();
+            return new EmplacementsResponse
+            {
+                Items = emplacements
+            };
         }
 
-        public async Task<List<Variete>> GetAllVarietesAsync()
-        {
-            return await Varietes.FromSqlRaw("EXEC getAllVarietes").ToListAsync();
-        }
-
-        public async Task<Variete> GetVarieteByIdAsync(int varieteId)
-        {
-            var varietes = await Varietes.FromSqlRaw("EXEC getVarieteById @p0", varieteId).ToListAsync();
-            return varietes.Count > 0 ? varietes[0] : null;
-        }
-
-        public async Task<string> DeleteVarieteByIdAsync(int varieteId)
+        public async Task<string> AddEmplacementAsync(string emplacementCode, string emplacementDescription)
         {
             await Database.ExecuteSqlRawAsync(
-                "EXEC deleteVarieteById @p0", varieteId);
-            return "Variété supprimée avec succès!";
+                "EXEC addEmplacement @p0, @p1",
+                new SqlParameter("@p0", emplacementCode),
+                new SqlParameter("@p1", emplacementDescription ?? (object)DBNull.Value));
+            return "Emplacement ajouté avec succès!";
         }
 
-        public async Task<List<Variete>> SearchVarieteAsync(string searchString)
+        public async Task<string> UpdateEmplacementAsync(int emplacementId, string emplacementCode, string emplacementDescription)
         {
-            return await Varietes.FromSqlRaw("EXEC searchVariete @p0", searchString).ToListAsync();
+            var result = await Database.ExecuteSqlRawAsync(
+                "EXEC updateEmplacement @p0, @p1, @p2",
+                emplacementId, emplacementCode, emplacementDescription);
+
+            return result == 1 ? "Emplacement mis à jour avec succès!" : "Erreur lors de la mise à jour de l'emplacement.";
         }
 
-        // PLANTULES METHODES
-        // Methods for Plantules
+        public async Task<string> DeleteEmplacementByIdAsync(int emplacementId)
+        {
+            var result = await Database.ExecuteSqlRawAsync(
+                "EXEC deleteEmplacementById @p0", emplacementId);
 
-        // PUT et POST
+            return result == 1 ? "Emplacement supprimé avec succès!" : "Erreur lors de la suppression de l'emplacement.";
+        }
+        #endregion
+
+        #region Plantules
+        public async Task<PlantulesDetailResponse> GetAllPlantulesAsync()
+        {
+            var plantules = await PlantuleDetails.FromSqlRaw("EXEC getAllPlantules").ToListAsync();
+            return new PlantulesDetailResponse
+            {
+                Items = plantules
+            };
+        }
+
+        public async Task<PlantulesDetailResponse> GetPlantuleByIdAsync(int plantuleId)
+        {
+            var plantules = await PlantuleDetails.FromSqlRaw("EXEC getPlantuleById @p0", plantuleId).ToListAsync();
+            return new PlantulesDetailResponse
+            {
+                Items = plantules
+            };
+        }
+
+        public async Task<PlantulesDetailResponse> SearchPlantulesAsync(string searchString)
+        {
+            var plantules = await PlantuleDetails.FromSqlRaw("EXEC searchPlantules @p0", searchString).ToListAsync();
+            return new PlantulesDetailResponse
+            {
+                Items = plantules
+            };
+        }
+
+        public async Task<PlantulesDetailResponse> GetPlantuleBySlugAsync(string slug)
+        {
+            var plantules = await PlantuleDetails.FromSqlRaw("EXEC getPlantuleBySlug @p0", slug).ToListAsync();
+            return new PlantulesDetailResponse
+            {
+                Items = plantules
+            };
+        }
+
+        public async Task<PlantulesDetailResponse> GetPlantuleByVarieteAsync(string varieteCode)
+        {
+            var plantules = await PlantuleDetails.FromSqlRaw("EXEC getPlantuleByVariete @p0", varieteCode).ToListAsync();
+            return new PlantulesDetailResponse
+            {
+                Items = plantules
+            };
+        }
+
+        public async Task<PlantulesDetailResponse> GetPlantulesActiveAsync()
+        {
+            var plantules = await PlantuleDetails.FromSqlRaw("EXEC getPlantulesActive").ToListAsync();
+            return new PlantulesDetailResponse
+            {
+                Items = plantules
+            };
+        }
+
+        public async Task<PlantulesDetailResponse> GetPlantulesInactiveAsync()
+        {
+            var plantules = await PlantuleDetails.FromSqlRaw("EXEC getPlantulesInactive").ToListAsync();
+            return new PlantulesDetailResponse
+            {
+                Items = plantules
+            };
+        }
+
+        public async Task<PlantulesDetailResponse> GetPlantulesArchivedAsync()
+        {
+            var plantules = await PlantuleDetails.FromSqlRaw("EXEC getPlantulesArchived").ToListAsync();
+            return new PlantulesDetailResponse
+            {
+                Items = plantules
+            };
+        }
+
         public async Task<string> AddPlantuleAsync(int varieteId, string plantuleDescription, DateTime dateReception, int provenanceId, string stade, string sante, int emplacementId, string eventUserName)
         {
             try
             {
                 await Database.ExecuteSqlRawAsync(
                     "EXEC AddPlantule @p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7",
-                    varieteId, plantuleDescription, dateReception, provenanceId, stade, sante, emplacementId, eventUserName
-                );
+                    varieteId, plantuleDescription, dateReception, provenanceId, stade, sante, emplacementId, eventUserName);
                 return "Plantule ajoutée avec succès!";
             }
             catch (Exception ex)
@@ -266,7 +366,6 @@ namespace ArganaWeedApi.Data
                 return $"Erreur lors de l'ajout de la plantule: {ex.Message}";
             }
         }
-
 
         public async Task<string> UpdatePlantuleEmplacementAsync(int id, int emplacementId, string eventUserName)
         {
@@ -276,7 +375,6 @@ namespace ArganaWeedApi.Data
 
             return result == 1 ? "Emplacement mis à jour avec succès!" : "Erreur lors de la mise à jour de l'emplacement.";
         }
-
 
         public async Task<string> UpdatePlantuleStadeAsync(int id, string stade, string eventUserName)
         {
@@ -296,8 +394,6 @@ namespace ArganaWeedApi.Data
             return result == 1 ? "Santé mise à jour avec succès!" : "Erreur lors de la mise à jour de la santé.";
         }
 
-
-
         public async Task<string> UpdatePlantuleSortieAsync(int id, DateTime? sortieDate, string sortieType, string sortieObservation, string eventUserName)
         {
             var result = await Database.ExecuteSqlRawAsync(
@@ -307,120 +403,64 @@ namespace ArganaWeedApi.Data
             return result == 1 ? "Sortie mise à jour avec succès!" : "Erreur lors de la mise à jour de la sortie.";
         }
 
-        // ARCHIVAGE de plantules inactifs depuis une certaine date
         public async Task<string> ArchivePlantulesAsync(DateTime endDate, string eventUserName)
         {
-            // Utilisation de ExecuteSqlRawAsync pour exécuter la procédure stockée
             var result = await Database.ExecuteSqlRawAsync(
-                "EXEC archivePlantules @p0",
-                endDate);
+                "EXEC archivePlantules @p0", endDate);
 
-          
             return result > 0 ? "Plantules archivées avec succès!" : "Aucune plantule à archiver ou erreur lors de l'archivage.";
         }
+        #endregion
 
-
-        // GET
-        public async Task<List<PlantuleDetail>> SearchPlantulesAsync(string searchString)
-        {
-            return await PlantuleDetails.FromSqlRaw("EXEC searchPlantules @p0", searchString).ToListAsync();
-        }
-
-        public async Task<List<PlantuleDetail>> GetAllPlantulesAsync()
-        {
-            return await PlantuleDetails.FromSqlRaw("EXEC getAllPlantules").ToListAsync();
-        }
-
-        public async Task<List<PlantuleDetail>> GetPlantulesActiveAsync()
-        {
-            return await PlantuleDetails.FromSqlRaw("EXEC getPlantulesActive").ToListAsync();
-        }
-
-        public async Task<List<PlantuleDetail>> GetPlantuleByVarieteAsync(string varieteCode)
-        {
-            return await PlantuleDetails.FromSqlRaw("EXEC getPlantuleByVariete @p0", varieteCode).ToListAsync();
-        }
-
-        public async Task<List<PlantuleDetail>> GetPlantulesInactiveAsync()
-        {
-            return await PlantuleDetails.FromSqlRaw("EXEC getPlantulesInactive").ToListAsync();
-        }
+        #region Notes
+        //************ GET
         
-        public async Task<List<PlantuleDetail>> GetPlantulesArchivedAsync()
+        public async Task<NotesResponse> GetAllNotesAsync()
         {
-            return await PlantuleDetails.FromSqlRaw("EXEC getPlantulesArchived").ToListAsync();
+            var notes = await Notes.FromSqlRaw("EXEC getAllNotes").ToListAsync();
+            return new NotesResponse
+            {
+                Items = notes
+            };
         }
 
-
-        public async Task<PlantuleDetail> GetPlantuleBySlugAsync(string slug)
-        {
-            var plantules = await PlantuleDetails.FromSqlRaw("EXEC getPlantuleBySlug @p0", slug).ToListAsync();
-            return plantules.FirstOrDefault();
-        }
-
-        public async Task<PlantuleDetail> GetPlantuleByIdAsync(int id)
-        {
-            var plantules = await PlantuleDetails.FromSqlRaw("EXEC getPlantuleById @p0", id).ToListAsync();
-            return plantules.FirstOrDefault();
-        }
-
-        /*
-        public async Task<string> UpdatePlantuleEmplacementAsync(int id, int emplacementId, string eventUserName)
-        {
-            var result = await Database.ExecuteSqlRawAsync(
-                "EXEC updatePlantuleEmplacement @p0, @p1, @p2",
-                id, emplacementId, eventUserName);
-
-            return result == 1 ? "Emplacement mis à jour avec succès!" : "Erreur lors de la mise à jour de l'emplacement.";
-        }
-
-        public async Task<string> UpdatePlantuleStadeAsync(int id, string stade, string eventUserName)
-        {
-            var result = await Database.ExecuteSqlRawAsync(
-                "EXEC updatePlantuleStade @p0, @p1, @p2",
-                id, stade, eventUserName);
-
-            return result == 1 ? "Stade mis à jour avec succès!" : "Erreur lors de la mise à jour du stade.";
-        }
-
-        public async Task<string> UpdatePlantuleSortieAsync(int id, DateTime? sortieDate, string sortieType, string sortieObservation, string eventUserName)
-        {
-            var result = await Database.ExecuteSqlRawAsync(
-                "EXEC updatePlantuleSortie @p0, @p1, @p2, @p3, @p4",
-                id, sortieDate, sortieType, sortieObservation, eventUserName);
-
-            return result == 1 ? "Sortie mise à jour avec succès!" : "Erreur lors de la mise à jour de la sortie.";
-        }
-
-        */
-
-
-        // NOTES
-        public async Task<List<Note>> GetAllNotesAsync()
-        {
-            return await Notes.FromSqlRaw("EXEC getAllNotes").ToListAsync();
-        }
-
-        public async Task<Note> GetNoteByIdAsync(int noteId)
+        public async Task<NotesResponse> GetNoteByIdAsync(int noteId)
         {
             var notes = await Notes.FromSqlRaw("EXEC getNoteById @p0", noteId).ToListAsync();
-            return notes.FirstOrDefault();
+            return new NotesResponse
+            {
+                Items = notes
+            };
         }
 
-        public async Task<List<Note>> GetNotesByPlantuleIdAsync(int plantuleId)
+        public async Task<NotesResponse> GetNotesByPlantuleIdAsync(int plantuleId)
         {
-            return await Notes.FromSqlRaw("EXEC getNotesByPlantuleId @p0", plantuleId).ToListAsync();
+            var notes = await Notes.FromSqlRaw("EXEC getNotesByPlantuleId @p0", plantuleId).ToListAsync();
+            return new NotesResponse
+            {
+                Items = notes
+            };
         }
 
-        public async Task<List<Note>> GetNotesByDateAsync(DateTime noteDate)
+        public async Task<NotesResponse> GetNotesByDateAsync(DateTime noteDate)
         {
-            return await Notes.FromSqlRaw("EXEC getNotesByDate @p0", noteDate).ToListAsync();
+            var notes = await Notes.FromSqlRaw("EXEC getNotesByDate @p0", noteDate).ToListAsync();
+            return new NotesResponse
+            {
+                Items = notes
+            };
         }
 
-        public async Task<List<Note>> GetNotesByUserNameAsync(string userName)
+        public async Task<NotesResponse> GetNotesByUserNameAsync(string userName)
         {
-            return await Notes.FromSqlRaw("EXEC getNotesByUserName @p0", userName).ToListAsync();
+            var notes = await Notes.FromSqlRaw("EXEC getNotesByUserName @p0", userName).ToListAsync();
+            return new NotesResponse
+            {
+                Items = notes
+            };
         }
+
+        //************** POST/UPDATE/DELETE
 
         public async Task<string> AddNoteAsync(string noteTexte, DateTime noteDate, DateTime? noteRappelDate, int plantuleId, string noteUserName)
         {
@@ -428,8 +468,7 @@ namespace ArganaWeedApi.Data
             {
                 await Database.ExecuteSqlRawAsync(
                     "EXEC addNote @p0, @p1, @p2, @p3, @p4",
-                    noteTexte, noteDate, noteRappelDate, plantuleId, noteUserName
-                );
+                    noteTexte, noteDate, noteRappelDate, plantuleId, noteUserName);
                 return "Note ajoutée avec succès!";
             }
             catch (Exception ex)
@@ -437,12 +476,71 @@ namespace ArganaWeedApi.Data
                 return $"Erreur lors de l'ajout de la note: {ex.Message}";
             }
         }
+        #endregion
 
+        #region Events
+        public async Task<EventsResponse> GetAllEventsAsync()
+        {
+            var events = await Events.FromSqlRaw("EXEC getAllEvents").ToListAsync();
+            return new EventsResponse
+            {
+                Items = events
+            };
+        }
 
+        public async Task<EventsResponse> GetEventByIdAsync(int eventId)
+        {
+            var events = await Events.FromSqlRaw("EXEC getEventById @p0", eventId).ToListAsync();
+            return new EventsResponse
+            {
+                Items = events
+            };
+        }
 
-        // EVENTS
-        // Methods for Events
-        // Events methods
+        public async Task<EventsResponse> GetEventsByPlantuleIdAsync(int plantuleId)
+        {
+            var events = await Events.FromSqlRaw("EXEC getEventsByPlantuleId @p0", plantuleId).ToListAsync();
+            return new EventsResponse
+            {
+                Items = events
+            };
+        }
+
+        public async Task<EventsResponse> GetEventByDateAsync(DateTime eventDate)
+        {
+            var events = await Events.FromSqlRaw("EXEC getEventByDate @p0", eventDate).ToListAsync();
+            return new EventsResponse
+            {
+                Items = events
+            };
+        }
+
+        public async Task<EventsResponse> GetEventsByUserNameAsync(string userName)
+        {
+            var events = await Events.FromSqlRaw("EXEC getEventsByUserName @p0", userName).ToListAsync();
+            return new EventsResponse
+            {
+                Items = events
+            };
+        }
+
+        public async Task<EventsResponse> GetEventsByTypeAsync(string eventType)
+        {
+            var events = await Events.FromSqlRaw("EXEC getEventsByType @p0", eventType).ToListAsync();
+            return new EventsResponse
+            {
+                Items = events
+            };
+        }
+
+        public async Task<EventsResponse> GetEventsByNatureAsync(string eventNature)
+        {
+            var events = await Events.FromSqlRaw("EXEC getEventsByNature @p0", eventNature).ToListAsync();
+            return new EventsResponse
+            {
+                Items = events
+            };
+        }
 
         public async Task<string> AddEventAsync(DateTime eventDateTime, string eventSource, string eventType, int plantuleId, string eventNature, string eventValeur, string eventUserName)
         {
@@ -450,8 +548,7 @@ namespace ArganaWeedApi.Data
             {
                 await Database.ExecuteSqlRawAsync(
                     "EXEC addEvent @p0, @p1, @p2, @p3, @p4, @p5, @p6",
-                    eventDateTime, eventSource, eventType, plantuleId, eventNature, eventValeur, eventUserName
-                );
+                    eventDateTime, eventSource, eventType, plantuleId, eventNature, eventValeur, eventUserName);
                 return "Événement ajouté avec succès!";
             }
             catch (Exception ex)
@@ -459,105 +556,62 @@ namespace ArganaWeedApi.Data
                 return $"Erreur lors de l'ajout de l'événement: {ex.Message}";
             }
         }
+        #endregion
 
-        public async Task<Event> GetEventByIdAsync(int eventId)
-        {
-            var events = await Events.FromSqlRaw("EXEC getEventById @p0", eventId).ToListAsync();
-            return events.FirstOrDefault();
-        }
+        #region Varietes
 
-        public async Task<List<Event>> GetAllEventsAsync()
+        public async Task<VarietesResponse> GetAllVarietesAsync()
         {
-            return await Events.FromSqlRaw("EXEC getAllEvents").ToListAsync();
-        }
-
-        public async Task<List<Event>> GetEventsByPlantuleIdAsync(int plantuleId)
-        {
-            return await Events.FromSqlRaw("EXEC getEventsByPlantuleId @p0", plantuleId).ToListAsync();
-        }
-
-        public async Task<List<Event>> GetEventByDateAsync(DateTime eventDate)
-        {
-            return await Events.FromSqlRaw("EXEC getEventByDate @p0", eventDate).ToListAsync();
-        }
-
-        public async Task<List<Event>> GetEventsByUserNameAsync(string userName)
-        {
-            return await Events.FromSqlRaw("EXEC getEventsByUserName @p0", userName).ToListAsync();
-        }
-
-        public async Task<List<Event>> GetEventsByTypeAsync(string eventType)
-        {
-            return await Events.FromSqlRaw("EXEC getEventsByType @p0", eventType).ToListAsync();
-        }
-
-        public async Task<List<Event>> GetEventsByNatureAsync(string eventNature)
-        {
-            return await Events.FromSqlRaw("EXEC getEventsByNature @p0", eventNature).ToListAsync();
-        }
-
-        // Emplacements
-        // Emplacements methods
-        public async Task<string> AddEmplacementAsync(string emplacementCode, string emplacementDescription)
-        {
-            var success = 0;
-            var message = string.Empty;
-            try
+            var varietes = await Varietes.FromSqlRaw("EXEC getAllVarietes").ToListAsync();
+            return new VarietesResponse
             {
-                await Database.ExecuteSqlRawAsync(
-                    "EXEC addEmplacement @p0, @p1",
-                    new SqlParameter("@p0", emplacementCode),
-                    new SqlParameter("@p1", emplacementDescription ?? (object)DBNull.Value));
-                success = 1;
-                message = "Emplacement ajouté avec succès!";
-            }
-            catch (Exception ex)
+                Items = varietes
+            };
+        }
+
+        public async Task<VarietesResponse> GetVarieteByIdAsync(int varieteId)
+        {
+            var varietes = await Varietes.FromSqlRaw("EXEC getVarieteById @p0", varieteId).ToListAsync();
+            return new VarietesResponse
             {
-                success = 0;
-                message = $"Échec de l'ajout de l'emplacement : {ex.Message}";
-            }
-
-            return message;
+                Items = varietes
+            };
         }
 
-        public async Task<string> UpdateEmplacementAsync(int emplacementId, string emplacementCode, string emplacementDescription)
+        public async Task<VarietesResponse> SearchVarieteAsync(string searchString)
         {
-            var result = await Database.ExecuteSqlRawAsync(
-                "EXEC updateEmplacement @p0, @p1, @p2",
-                emplacementId, emplacementCode, emplacementDescription);
-
-            return result == 1 ? "Emplacement mis à jour avec succès!" : "Erreur lors de la mise à jour de l'emplacement.";
+            var varietes = await Varietes.FromSqlRaw("EXEC searchVariete @p0", searchString).ToListAsync();
+            return new VarietesResponse
+            {
+                Items = varietes
+            };
         }
 
 
-        public async Task<List<Emplacement>> GetAllEmplacementsAsync()
+
+
+        public async Task<string> AddVarieteAsync(string varieteCode, string varieteNom, string varieteDescription, string varieteCategorie)
         {
-            return await Emplacements.FromSqlRaw("EXEC getAllEmplacements").ToListAsync();
+            await Database.ExecuteSqlRawAsync(
+                "EXEC addVariete @p0, @p1, @p2, @p3",
+                varieteCode, varieteNom, varieteDescription, varieteCategorie);
+            return "Variété ajoutée avec succès!";
         }
 
-        public async Task<Emplacement> GetEmplacementByIdAsync(int emplacementId)
+        public async Task<string> UpdateVarieteAsync(int varieteId, string varieteCode, string varieteNom, string varieteDescription, string varieteCategorie)
         {
-            var emplacements = await Emplacements.FromSqlRaw("EXEC getEmplacementById @p0", emplacementId).ToListAsync();
-            return emplacements.FirstOrDefault();
+            await Database.ExecuteSqlRawAsync(
+                "EXEC updateVariete @p0, @p1, @p2, @p3, @p4",
+                varieteId, varieteCode, varieteNom, varieteDescription, varieteCategorie);
+            return "Variété mise à jour avec succès!";
         }
 
-        public async Task<string> DeleteEmplacementByIdAsync(int emplacementId)
+        public async Task<string> DeleteVarieteByIdAsync(int varieteId)
         {
-            var result = await Database.ExecuteSqlRawAsync(
-                "EXEC deleteEmplacementById @p0",
-                emplacementId);
-
-            return result == 1 ? "Emplacement supprimé avec succès!" : "Erreur lors de la suppression de l'emplacement.";
+            await Database.ExecuteSqlRawAsync(
+                "EXEC deleteVarieteById @p0", varieteId);
+            return "Variété supprimée avec succès!";
         }
-
-
-        public async Task<List<Emplacement>> SearchEmplacementAsync(string searchString)
-        {
-            return await Emplacements.FromSqlRaw("EXEC searchEmplacement @p0", searchString).ToListAsync();
-        }
-
-
-
+        #endregion
     }
-    
 }

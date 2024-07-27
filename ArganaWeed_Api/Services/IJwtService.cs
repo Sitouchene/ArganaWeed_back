@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using ArganaWeedApi.Models;
-namespace ArganaWeedApi.Services
+using ArganaWeedApp.Models;
+namespace ArganaWeedApp.Services
 {
     public interface IJwtService
     {

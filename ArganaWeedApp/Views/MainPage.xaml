@@ -23,12 +23,13 @@
                     <Label Text="Bienvenue dans Argana Weed"
                            FontSize="Subtitle"
                            HorizontalOptions="Center"
-                           TextColor="Snow" />
+                           TextColor="Snow" 
+                           LineBreakMode="WordWrap"/>
 
                     <Label Text="L'application qui facilite la gestion de culture cannabis"
                            
-                           HorizontalOptions="Center" 
-                           TextColor="Snow" />          
+                           HorizontalOptions="FillAndExpand" VerticalOptions="Start"
+                           TextColor="Snow" LineBreakMode="WordWrap" />          
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
@@ -40,8 +41,7 @@
 
             <!-- Expander 2 -->
             <StackLayout>
-                
-                 <local:CustomExpander HeaderText="BIO-INNOVATION (CAT-B)">
+               
                     <Grid ColumnSpacing="5" RowSpacing="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*" />
@@ -61,8 +61,7 @@
                                LineBreakMode="WordWrap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" 
                                HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" />
                     </Grid>
-                </local:CustomExpander>
-            </StackLayout>
+               </StackLayout>
 
 
 

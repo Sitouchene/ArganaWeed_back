@@ -1,12 +1,13 @@
 ﻿
 //using ArganaWeedModels;
-using ArganaWeedApi.Models;
-using ArganaWeedApi.Services;
+using ArganaWeedApp.Models;
+using ArganaWeedApp.DTOs;
+using ArganaWeedApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ArganaWeedApi.Controllers
+namespace ArganaWeedApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -22,7 +23,7 @@ namespace ArganaWeedApi.Controllers
         }
 
          [HttpPost("login")]
-        public async Task<LoginResponse> Login2([FromBody] LoginRequest request)
+        public async Task<LoginResponse> Login(LoginRequest request)
         {
             LoginResponse loginResponse = new LoginResponse();
           
@@ -30,50 +31,21 @@ namespace ArganaWeedApi.Controllers
 
             if (authenticated)
             {
-
-             loginResponse.success = true;
-              var token = _jwtService.GenerateSecurityToken(request.Email, roles);
-
-             // assign values
-                return  new loginResponse
-                {
-                    Token = token,
-                    Roles = roles,
-                    CurrentUser = currentUser,
-                    UserId = userId
-                });
+                var token = _jwtService.GenerateSecurityToken(request.Email, roles);
+                loginResponse.Token = token;
+                loginResponse.Success = true;
+                loginResponse.Message = message;
+                loginResponse.UserId = userId ?? 0;
+                loginResponse.Roles = roles;
             }
             else{
-             loginResponse.success = false;
-             loginResponse.message = "Invalid user or password !";
-
-         
-            
+                loginResponse.Success = false;
+                loginResponse.Message = message;
             }
-
-            return loginresponse;
+            return loginResponse;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] AuthRequest request)
-        {
-            var (authenticated, message, currentUser, userId, roles) = await _userService.AuthenticateUserAsync(request.Email, request.Password);
-
-            if (authenticated)
-            {
-                var token = _jwtService.GenerateSecurityToken(request.Email, roles);
-
-                return Ok(new AuthResponse
-                {
-                    Token = token,
-                    Roles = roles,
-                    CurrentUser = currentUser,
-                    UserId = userId
-                });
-            }
-
-            return Unauthorized(new { Message = message });
-        }
+        
 
         [HttpPost("logout")]
         public IActionResult Logout()

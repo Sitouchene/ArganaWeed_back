@@ -1,13 +1,13 @@
-﻿using ArganaWeedApi.Data;
-using ArganaWeedApi.Models;
+﻿using ArganaWeedApp.Data;
+using ArganaWeedApp.DTOs;
+using ArganaWeedApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ArganaWeedApi.Controllers
+namespace ArganaWeedApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;
@@ -16,41 +16,30 @@ namespace ArganaWeedApi.Controllers
         {
             _context = context;
         }
-        /*
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            var users = await _context.GetAllUsersAsync();
-            return Ok(users);
-        }*/
+
 
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<UsersResponse> GetUsers()
         {
-            var users = await _context.GetAllUsersAsync();
-            return users;
+            return await _context.GetAllUsersAsync();
         }
 
-
-
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<UsersResponse> GetUser(int id)
         {
-            var user = await _context.GetUserByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return Ok(user);
+            return await _context.GetUserByIdAsync(id);
         }
 
         [HttpGet("search/{searchString}")]
-        public async Task<ActionResult<IEnumerable<User>>> SearchUsers(string searchString)
+        public async Task<ActionResult<UsersResponse>> SearchUsers(string searchString)
         {
-            var users = await _context.SearchUsersAsync(searchString);
-            return Ok(users);
+            var usersResponse = await _context.SearchUsersAsync(searchString);
+            return Ok(usersResponse);
         }
+
+
+
+
 
         [HttpPost]
         public async Task<ActionResult<string>> PostUser(User user)

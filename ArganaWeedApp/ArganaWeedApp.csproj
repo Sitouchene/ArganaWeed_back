@@ -67,20 +67,33 @@
 	  <None Remove="Resources\Images\UcenTech.svg" />
 	  <None Remove="Resources\Images\usermanual100.png" />
 	  <None Remove="Resources\Images\usermanual100b.png" />
+	  <None Remove="Resources\Images\weed.png" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="DevExpress.Maui.Controls" Version="24.1.4" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="24.1.4" />
+		<PackageReference Include="DevExpress.Maui.Core" Version="24.1.4" />
 		<PackageReference Include="DevExpress.ExpressApp" Version="24.1.4" />
 		<PackageReference Include="DevExpress.ExpressApp.EFCore" Version="24.1.4" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="24.1.4" />
 		<PackageReference Include="DevExpress.Persistent.BaseImpl.EFCore" Version="24.1.4" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.70" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.70" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Controls\CustomExpander.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EmplacementDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EmplacementNewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EmplacementsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
@@ -89,11 +102,12 @@
 	  <MauiXaml Update="Views\MainPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="NewFolder\" />
-	  <Folder Include="ViewModels\" />
+	  <MauiXaml Update="Views\MenuPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PlantulesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

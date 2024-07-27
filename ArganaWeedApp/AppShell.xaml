@@ -9,9 +9,47 @@
     Shell.BackgroundColor="#CDA622"
     Shell.TitleColor="Black">
 
+    
+
     <ShellContent
-        Title="ArganaWeed | Accueil"
+        Title="Accueil"
         ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage" />
+
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage" />
+
+    <ShellContent
+        Title="Menu"
+        ContentTemplate="{DataTemplate views:MenuPage}"
+        Route="MenuPage" />
+
+    <ShellContent
+        Title="Plantules"
+        ContentTemplate="{DataTemplate views:PlantulesPage}"
+        Route="PlantulesPage" />
+
+    <ShellContent
+        Title="Emplacements"
+        ContentTemplate="{DataTemplate views:EmplacementsPage}"
+        Route="EmplacementsPage" />
+
+    <ShellContent
+        Title="Détail de l'emplacement"
+        ContentTemplate="{DataTemplate views:EmplacementDetailPage}"
+        Route="EmplacementDetailPage" />
+
+    <ShellContent
+        Title="Nouvel emplacement"
+        ContentTemplate="{DataTemplate views:EmplacementNewPage}"
+        Route="EmplacementNewPage" />
+
+
+
+
+
+
 
 </Shell>

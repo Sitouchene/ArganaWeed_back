@@ -1,6 +1,6 @@
-﻿using ArganaWeedApi.Models;
+﻿using ArganaWeedApp.Models;
 
-namespace ArganaWeedApi.Services
+namespace ArganaWeedApp.Services
 {
     public interface IUserService
     {
