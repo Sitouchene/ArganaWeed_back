@@ -8,12 +8,7 @@ namespace ArganaWeedApp.Services
 {
     public class ApiService
     {
-        /* Test avec android
-        private static HttpClient sharedClient = new()
-        {
-            BaseAddress = new Uri("http://10.0.2.2:5153"),
-        };
-        */
+
         private static readonly string BaseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5153" : "http://localhost:5153";
         private static readonly HttpClient sharedClient = new HttpClient
         {
@@ -62,17 +57,95 @@ namespace ArganaWeedApp.Services
                 }
                 else
                 {
-                    Console.WriteLine("Erreur ou aucun élément trouvé !");
+                    await AlertService.Instance.ShowAlert("Erreur", "Erreur ou aucun élément trouvé !", "OK");
                     return new List<TItem>();
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erreur lors de l'appel au serveur {endpoint}: {ex.Message}");
-                throw new RemoteCallException($"Error while Calling server {endpoint}", ex);
+                await AlertService.Instance.ShowAlert("Erreur", $"Erreur lors de l'appel au serveur {endpoint}: {ex.Message}", "OK");
+                return new List<TItem>();
             }
         }
 
+        public static async Task UpdateItemAsync<TRequest, TResponse, TItem>(string endpoint, TRequest request)
+            where TRequest : BaseRequest
+            where TResponse : BaseResponse<TItem>, new()
+        {
+            var clientRequest = new ClientRequestResponse<TRequest, TResponse, TItem>(request, endpoint);
+
+            try
+            {
+                TResponse response = await clientRequest.ReceivePost(); // Or ReceivePut() if using PUT for updates
+
+                if (response != null && response.Items != null && response.Items.Count > 0)
+                {
+                    await AlertService.Instance.ShowAlert("Succès", "Élément mis à jour avec succès.", "OK");
+                }
+                else
+                {
+                    await AlertService.Instance.ShowAlert("Erreur", "Erreur lors de la mise à jour de l'élément ou aucun élément mis à jour.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await AlertService.Instance.ShowAlert("Erreur", $"Erreur lors de l'appel au serveur {endpoint} : {ex.Message}", "OK");
+            }
+        }
+
+
+        public static async Task DeleteItemAsync<TRequest>(string endpoint, TRequest request)
+                where TRequest : BaseRequest
+        {
+            var clientRequest = new ClientRequestResponse<TRequest, BaseResponseString, string>(request, endpoint);
+
+            try
+            {
+                var response = await clientRequest.ReceivePost(); // Or ReceiveDelete() if using DELETE for deletions
+
+                if (response != null && response.Items != null && response.Items.Count > 0)
+                {
+                    await AlertService.Instance.ShowAlert("Succès", "Élément supprimé avec succès.", "OK");
+                }
+                else
+                {
+                    await AlertService.Instance.ShowAlert("Erreur", "Erreur lors de la suppression de l'élément ou aucun élément supprimé.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await AlertService.Instance.ShowAlert("Erreur", $"Erreur lors de l'appel au serveur {endpoint} : {ex.Message}", "OK");
+            }
+        }
+
+
+
+        public static async Task AddItemAsync<TRequest, TResponse, TItem>(string endpoint, TRequest request)
+            where TRequest : BaseRequest
+            where TResponse : BaseResponse<TItem>, new()
+        {
+            var clientRequest = new ClientRequestResponse<TRequest, TResponse, TItem>(request, endpoint);
+
+            try
+            {
+                TResponse response = await clientRequest.ReceivePost();
+
+                if (response != null && response.Items != null && response.Items.Count > 0)
+                {
+                    await AlertService.Instance.ShowAlert("Succès", "Élément ajouté avec succès.", "OK");
+                }
+                else
+                {
+                    await AlertService.Instance.ShowAlert("Erreur", "Erreur lors de l'ajout de l'élément ou aucun élément ajouté.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await AlertService.Instance.ShowAlert("Erreur", $"Erreur lors de l'appel au serveur {endpoint} : {ex.Message}", "OK");
+            }
+        }
+
+        /*
         public static async Task AddItemAsync<TRequest, TResponse, TItem>(string endpoint, TRequest request)
             where TRequest : BaseRequest
             where TResponse : BaseResponse<TItem>, new()
@@ -89,7 +162,7 @@ namespace ArganaWeedApp.Services
             {
                 Console.WriteLine("Error adding item or no item added.");
             }
-        }
+        }*/
         #endregion
 
         #region Emplacement GET
@@ -99,20 +172,15 @@ namespace ArganaWeedApp.Services
             return await GetItemsAsync<GenericRequest, EmplacementsResponse, Emplacement>("/api/emplacements");
         }
 
-
-        /*public static async Task GetEmplacementsAsync()
+        public static async Task<Emplacement> GetEmplacementByIdAsync(int id)
         {
-            await GetItemsAsync<GenericRequest, EmplacementsResponse, Emplacement>("/api/emplacements");
-        }*/
-
-        public static async Task GetEmplacementByIdAsync(int id)
-        {
-            await GetItemsAsync<GenericRequest, EmplacementsResponse, Emplacement>($"/api/emplacements/{id}");
+            var items = await GetItemsAsync<GenericRequest, EmplacementsResponse, Emplacement>($"/api/emplacements/{id}");
+            return items.FirstOrDefault();
         }
 
-        public static async Task SearchEmplacementsAsync(string searchString)
+        public static async Task<List<Emplacement>> SearchEmplacementsAsync(string searchString)
         {
-            await GetItemsAsync<GenericRequest, EmplacementsResponse, Emplacement>($"/api/emplacements/search/{searchString}");
+            return await GetItemsAsync<GenericRequest, EmplacementsResponse, Emplacement>($"/api/emplacements/search/{searchString}");
         }
 
         public static async Task AddEmplacementAsync(Emplacement emplacement)
@@ -125,6 +193,26 @@ namespace ArganaWeedApp.Services
 
             await AddItemAsync<EmplacementRequest, EmplacementsResponse, Emplacement>("/api/emplacements", emplacementRequest);
         }
+
+        public static async Task UpdateEmplacementAsync(Emplacement emplacement)
+        {
+            var emplacementRequest = new EmplacementRequest
+            {
+                EmplacementCode = emplacement.EmplacementCode,
+                EmplacementDescription = emplacement.EmplacementDescription
+            };
+
+            await UpdateItemAsync<EmplacementRequest, EmplacementsResponse, Emplacement>($"/api/emplacements/{emplacement.EmplacementId}", emplacementRequest);
+        }
+
+        public static async Task DeleteEmplacementAsync(int emplacementId)
+        {
+            var request = new BaseRequest();
+            await DeleteItemAsync($"/api/emplacements/{emplacementId}", request);
+        }
+
+
+
         #endregion
 
 

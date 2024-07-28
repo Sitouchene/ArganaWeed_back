@@ -22,4 +22,9 @@ namespace ArganaWeedApp
             this.Items = new List<T>();
         }
     }
+
+    public class BaseResponseString : BaseResponse<string>
+    {
+        public BaseResponseString() : base() { }
+    }
 }

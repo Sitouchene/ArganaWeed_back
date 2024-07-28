@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
              x:Class="ArganaWeedApp.Views.EmplacementDetailPage"
-             Title="Détail de l'emplacement">
+             Title="Emplacement|Détails">
 
-    <StackLayout Padding="10">
-        <Entry Placeholder="Code d'emplacement" x:Name="CodeEntry" />
-        <Entry Placeholder="Description d'emplacement" x:Name="DescriptionEntry" />
-        <Button Text="Modifier" />
-        <Button Text="Supprimer" />
-        <Button Text="Quitter" Clicked="OnQuitClicked" />
+
+
+    <StackLayout Padding="10" Spacing="10" MinimumWidthRequest="400" MaximumWidthRequest="500">
+        <Label Text="Code:" FontAttributes="Bold" />
+        <Entry Text="{Binding Emplacement.EmplacementCode}" FontAttributes="Bold" TextColor="White" />
+
+        <Label Text="Description de l'emplacement:" FontAttributes="Bold" />
+        <Editor Text="{Binding Emplacement.EmplacementDescription}" FontAttributes="Bold" TextColor="White" HeightRequest="80" />
+
+        <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+
+        <Grid ColumnSpacing="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Text="Modifier" Command="{Binding UpdateCommand}" HorizontalOptions="FillAndExpand" />
+            <Button Grid.Column="1" Text="Supprimer" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand" />
+            <Button Grid.Column="2" Text="Retour" Command="{Binding NavigateBackCommand}" HorizontalOptions="FillAndExpand"/>
+        </Grid>
     </StackLayout>
 </ContentPage>

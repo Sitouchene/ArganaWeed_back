@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ArganaWeedApp.Controls"
-
-             x:Class="ArganaWeedApp.Views.MainPage">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="ArganaWeedApp.Views.MainPage"
+             Title="Acceuil"
+             >
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="ToolbarItem_Clicked">
@@ -15,11 +16,14 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <ScrollView>
-        <StackLayout Padding="10" Spacing="10" BackgroundColor="Black" VerticalOptions="FillAndExpand">
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                <Image Source="arganalogo.png" HeightRequest="80" HorizontalOptions="Start" />
-                <VerticalStackLayout VerticalOptions="Center">
+    <ScrollView HorizontalOptions="CenterAndExpand" MinimumHeightRequest="400" MaximumWidthRequest="600">
+        <StackLayout Padding="10" Spacing="10" VerticalOptions="FillAndExpand" HorizontalOptions="Center">
+            
+            <!-- Section 0: Animation logo plus appli -->
+            
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Image Source="arganalogo.png" HeightRequest="80" HorizontalOptions="Center" />
+               
                     <Label Text="Bienvenue dans Argana Weed"
                            FontSize="Subtitle"
                            HorizontalOptions="Center"
@@ -30,38 +34,113 @@
                            
                            HorizontalOptions="FillAndExpand" VerticalOptions="Start"
                            TextColor="Snow" LineBreakMode="WordWrap" />          
-                </VerticalStackLayout>
-            </HorizontalStackLayout>
-
-            <!-- Animated Logo -->
             
-
-            
-
-
-            <!-- Expander 2 -->
-            <StackLayout>
-               
-                    <Grid ColumnSpacing="5" RowSpacing="5">
+            </VerticalStackLayout>
+           
+            <!-- Section 01: Labo CAT-B -->
+           
+            <toolkit:Expander >
+                <toolkit:Expander.Header>
+                        <Label Text="Bio-Innovation (CAT-B)" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" BackgroundColor="{StaticResource Tertiary}" />
+                </toolkit:Expander.Header>
+                <toolkit:Expander.Content>
+                    <Grid ColumnSpacing="5" RowSpacing="5" Margin="0,10">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="2*" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="3*" />
                         </Grid.ColumnDefinitions>
 
-                        <Image Source="biocat.png" Grid.RowSpan="2" 
-                               HorizontalOptions="Center" VerticalOptions="Start" WidthRequest="80"/>
-                        <Button Text="Lire plus" Clicked="OnLirePlusClicked" Grid.Row="1" Grid.Column="0"
-                                 HorizontalOptions="Center" VerticalOptions="End"/>
+                        <Image Source="biocat.png" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" HorizontalTextAlignment="Start"                                
+                               Text="Le Centre d’accès à la technologie en bio-innovation (CAT-B) de La Cité contribue au secteur de la biotechnologie en accélérant l’innovation dans les entreprises par le soutien au développement et à l’amélioration des produits. &#10; Notre modèle d’affaires repose sur un partenariat avec l’industrie pour de la recherche appliquée, cofinancé par des fonds publics et privés, dans lequel la propriété intellectuelle des prototypes est transférée aux entreprises.&#10; L’équipe du CAT-B est constituée de personnel de recherche, de professeurs chercheurs et d’étudiants du Baccalauréat spécialisé en biotechnologie qui travaillent en étroite collaboration avec les entreprises privées et institutions partenaires."
+                              />
+                        <Label Text="en savoir plus ..." Grid.Column="1" Grid.Row="1" FontAttributes="Bold" TextColor="{StaticResource Secondary}" BackgroundColor="{StaticResource Tertiary}" HorizontalOptions="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLirePlus1Tapped" NumberOfTapsRequired="1"/>
+                            </Label.GestureRecognizers>
+                        </Label>
 
-                        <Label Text="Le Centre d’accès à la technologie en bio-innovation (CAT-B) de La Cité contribue au secteur de la biotechnologie en accélérant l’innovation dans les entreprises par le soutien au développement et à l’amélioration des produits. Notre modèle d’affaires repose sur un partenariat avec l’industrie pour de la recherche appliquée, cofinancé par des fonds publics et privés, dans lequel la propriété intellectuelle des prototypes est transférée aux entreprises. L’équipe du CAT-B est constituée de personnel de recherche, de professeurs chercheurs et d’étudiants du Baccalauréat spécialisé en biotechnologie qui travaillent en étroite collaboration avec les entreprises privées et institutions partenaires."
-                               LineBreakMode="WordWrap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" 
-                               HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" />
                     </Grid>
-               </StackLayout>
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+
+             <!-- Section UCEN TECH ET EQUIPE DE DEVELOPPEMENT-->
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Label Text="UCEN TECH: équipe de développement" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" BackgroundColor="{StaticResource Tertiary}" />
+                </toolkit:Expander.Header>
+                
+                <toolkit:Expander.Content>
+                    <VerticalStackLayout>
+                        <!-- UCEN TECH -->
+                        <Grid ColumnSpacing="5" RowSpacing="5" Margin="0,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.RowSpan="2" Source="ucentech.png" HorizontalOptions="Center" VerticalOptions="Center" />
+
+                            <Label Grid.Column="1" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" HorizontalTextAlignment="Start"                                
+                                  Text="'Ucen Tech' est un jeune groupe dynamique de développeurs passionnés par l'informatique et les nouvelles technologies. &#10;Notre mission est de créer des solutions innovantes et personnalisées qui répondent aux besoins spécifiques de nos clients. &#10;&#10;Chez Ucen Tech, nous ne nous contentons pas de développer des logiciels ; nous forgeons des partenariats solides et durables qui propulsent nos clients vers de nouveaux sommets. &#10;&#10;Rejoignez-nous dans cette aventure technologique et laissez-nous vous aider à atteindre vos objectifs avec des solutions de pointe qui font la différence." 
+                                   />
+                            <Label Grid.Row="2" Grid.Column="1" Text="Contactez nous &#8658; " FontAttributes="Bold" TextColor="{StaticResource Secondary}" BackgroundColor="{StaticResource Tertiary}" HorizontalOptions="End">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnContactSalimTapped" NumberOfTapsRequired="1"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+
+                        
+                        <BoxView HeightRequest="3" BackgroundColor="White" Margin="0,5"/>
+                        <!-- Salim -->
+                        <Grid ColumnSpacing="5" RowSpacing="5" Margin="0,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <VerticalStackLayout Grid.RowSpan="3" VerticalOptions="Center">
+                                <Frame  WidthRequest="80" HeightRequest="80" CornerRadius="40" HorizontalOptions="Center" VerticalOptions="Center" 
+                                        BackgroundColor="Transparent" BorderColor="{StaticResource PrimaryDarkText}">
+                                    <VerticalStackLayout>
+
+                                        <Image Source="salim.png" Aspect="AspectFit" Scale="2" />
+
+                                    </VerticalStackLayout>
+
+                                </Frame>
+                            </VerticalStackLayout>
+
+                            <Label Grid.Column="1" Grid.Row="0" Text="Salim Itouchene" FontSize="Subtitle"  TextColor="Snow" HorizontalOptions="Center" />
+
+                            <Label Grid.Column="1" Grid.Row="1" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" HorizontalTextAlignment="Start"
+                               Text="Salim Itouchene, expert en finances, audit et gestion, est passionné par l'analyse de données et l'informatique. &#10;Avec une solide expérience en solutions informatiques et projets innovants, il transforme les défis en opportunités. &#10;Maîtrisant le développement web, la gestion des bases de données, le mobile et les API serveur, Salim est prêt à propulser votre entreprise vers de nouveaux sommets. &#10;Rejoignez-le dans cette quête d'excellence technologique !"/>
+
+                            <Label Grid.Row="2" Grid.Column="1" Text="Contactez moi &#8658;" FontAttributes="Bold" TextColor="{StaticResource Secondary}" BackgroundColor="{StaticResource Tertiary}" HorizontalOptions="End">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnContactSalimTapped" NumberOfTapsRequired="1"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </VerticalStackLayout>
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+
+
 
 
 

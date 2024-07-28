@@ -11,4 +11,7 @@ namespace ArganaWeedApp.DTOs
         public string EmplacementCode { get; set; }
         public string EmplacementDescription { get; set; }
     }
+
+
+
 }

@@ -47,7 +47,6 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -62,15 +61,27 @@
 	  <None Remove="Resources\Images\arganaanimation.gif" />
 	  <None Remove="Resources\Images\arganaanimationsprite.png" />
 	  <None Remove="Resources\Images\arganalogo.png" />
+	  <None Remove="Resources\Images\back100.png" />
+	  <None Remove="Resources\Images\backarrow52.png" />
 	  <None Remove="Resources\Images\biocat.png" />
 	  <None Remove="Resources\Images\cannabisbg.jpg" />
+	  <None Remove="Resources\Images\dashboard.png" />
+	  <None Remove="Resources\Images\delete100.png" />
+	  <None Remove="Resources\Images\edit.png" />
+	  <None Remove="Resources\Images\inventaire.png" />
+	  <None Remove="Resources\Images\isidore.jpg" />
+	  <None Remove="Resources\Images\qrscan.png" />
+	  <None Remove="Resources\Images\salim.png" />
+	  <None Remove="Resources\Images\save100.png" />
 	  <None Remove="Resources\Images\UcenTech.svg" />
+	  <None Remove="Resources\Images\ucentechp.png" />
 	  <None Remove="Resources\Images\usermanual100.png" />
 	  <None Remove="Resources\Images\usermanual100b.png" />
 	  <None Remove="Resources\Images\weed.png" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.2" />
 		<PackageReference Include="DevExpress.Maui.Controls" Version="24.1.4" />
 		<PackageReference Include="DevExpress.Maui.DataGrid" Version="24.1.4" />
 		<PackageReference Include="DevExpress.Maui.Core" Version="24.1.4" />
@@ -84,7 +95,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Controls\CustomExpander.xaml">
+	  <MauiXaml Update="Controls\CustomButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\EmplacementDetailPage.xaml">

@@ -1,14 +1,15 @@
-namespace ArganaWeedApp.Views;
+using ArganaWeedApp.Models;
+using ArganaWeedApp.ViewModels;
+using Microsoft.Maui.Controls;
 
-public partial class EmplacementDetailPage : ContentPage
+namespace ArganaWeedApp.Views
 {
-	public EmplacementDetailPage()
-	{
-		InitializeComponent();
-	}
-
-    private async void OnQuitClicked(object sender, EventArgs e)
+    public partial class EmplacementDetailPage : ContentPage
     {
-        await Shell.Current.GoToAsync("//EmplacementsPage");
+        public EmplacementDetailPage(Emplacement selectedEmplacement)
+        {
+            InitializeComponent();
+            BindingContext = new EmplacementDetailViewModel(selectedEmplacement);
+        }
     }
 }

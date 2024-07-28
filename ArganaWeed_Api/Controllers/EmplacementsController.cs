@@ -57,7 +57,7 @@ namespace ArganaWeedApp.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Owner")]
+        //[Authorize(Roles = "Owner")]
         public async Task<ActionResult<string>> UpdateEmplacement(int id, [FromBody] Emplacement emplacement)
         {
             if (emplacement == null)
@@ -70,7 +70,7 @@ namespace ArganaWeedApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Owner")]
+        //[Authorize(Roles = "Owner")]
         public async Task<ActionResult<string>> DeleteEmplacement(int id)
         {
             var message = await _context.DeleteEmplacementByIdAsync(id);

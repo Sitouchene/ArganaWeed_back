@@ -3,53 +3,16 @@
     x:Class="ArganaWeedApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:ArganaWeedApp.Views"
+    xmlns:local="clr-namespace:ArganaWeedApp.Views"
     Shell.FlyoutBehavior="Disabled"
-    Title="ArganaWeedApp"
-    Shell.BackgroundColor="#CDA622"
-    Shell.TitleColor="Black">
+    Title="ArganaWeedApp">
 
-    
-
-    <ShellContent
-        Title="Accueil"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
-
-    <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="LoginPage" />
-
-    <ShellContent
-        Title="Menu"
-        ContentTemplate="{DataTemplate views:MenuPage}"
-        Route="MenuPage" />
-
-    <ShellContent
-        Title="Plantules"
-        ContentTemplate="{DataTemplate views:PlantulesPage}"
-        Route="PlantulesPage" />
-
-    <ShellContent
-        Title="Emplacements"
-        ContentTemplate="{DataTemplate views:EmplacementsPage}"
-        Route="EmplacementsPage" />
-
-    <ShellContent
-        Title="Détail de l'emplacement"
-        ContentTemplate="{DataTemplate views:EmplacementDetailPage}"
-        Route="EmplacementDetailPage" />
-
-    <ShellContent
-        Title="Nouvel emplacement"
-        ContentTemplate="{DataTemplate views:EmplacementNewPage}"
-        Route="EmplacementNewPage" />
-
-
-
-
-
-
+    <ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
+    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
+    <ShellContent Route="MenuPage" ContentTemplate="{DataTemplate local:MenuPage}" />
+    <ShellContent Route="PlantulesPage" ContentTemplate="{DataTemplate local:PlantulesPage}" />
+    <ShellContent Route="EmplacementsPage" ContentTemplate="{DataTemplate local:EmplacementsPage}" />
+    <ShellContent Route="EmplacementDetailPage" ContentTemplate="{DataTemplate local:EmplacementDetailPage}" />
+    <ShellContent Route="EmplacementNewPage" ContentTemplate="{DataTemplate local:EmplacementNewPage}" />
 
 </Shell>

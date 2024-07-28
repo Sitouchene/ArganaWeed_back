@@ -3,16 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ArganaWeedApp.Views.MenuPage"
              Title="Menu">
-    <StackLayout Padding="10" Spacing="10">
-        <Button Text="Plantules"
-                BackgroundColor="DarkGreen"
-                TextColor="White"
-                Margin="0, 20" 
-                Clicked="OnPlantulesClicked" />
-        <Button Text="Emplacements"
-                BackgroundColor="DarkGreen"
-                TextColor="White"
-                Margin="0, 20" 
-                Clicked="OnEmplacementsClicked" />
+    
+    
+    <StackLayout Padding="10" Spacing="10" HorizontalOptions="CenterAndExpand" WidthRequest="400">
+        
+        <Label x:Name="userNameLabel" Text="User Name" FontSize="Large" />
+        <Label x:Name="userRolesLabel" Text="User Roles" FontSize="Medium" />
+        
+        <ScrollView VerticalOptions="FillAndExpand" >
+            <TableView x:Name="menuTableView" Intent="Menu">
+                <TableRoot>
+                    <!-- Sections and cells will be added dynamically in the code-behind -->
+                </TableRoot>
+            </TableView>
+        </ScrollView>
+        
+        
+        
     </StackLayout>
 </ContentPage>

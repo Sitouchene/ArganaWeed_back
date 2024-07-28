@@ -1,4 +1,6 @@
-﻿using DevExpress.Maui;
+﻿using CommunityToolkit.Maui;
+using DevExpress.Maui;
+using DevExpress.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace ArganaWeedApp
@@ -10,6 +12,7 @@ namespace ArganaWeedApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .UseDevExpress()
                 .UseDevExpressControls()
                 .UseDevExpressCollectionView()

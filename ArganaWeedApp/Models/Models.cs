@@ -207,6 +207,75 @@
         }
     }
 
+    /*Code pour tests*/
+    public class AuthenticationResult
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public List<string> UserRoles { get; set; }
+    }
+
+    public class UserRepository
+    {
+        private List<User> users = new List<User>
+    {
+        new User { UserId = 9, UserName = "salim", HashedPassword = "123Soleil", UserEmail = "sitouchene@gmail.com", IsAdministrator = true, IsOwner = true, IsAgent = true, IsViewer = true, IsActive = true },
+        new User { UserId = 13, UserName = "harold", HashedPassword = "123Soleil", UserEmail = "horold@catb.ca", IsAdministrator = true, IsOwner = false, IsAgent = false, IsViewer = true, IsActive = true },
+        new User { UserId = 11, UserName = "khadidja", HashedPassword = "123Soleil", UserEmail = "khadidja@catb.ca", IsAdministrator = false, IsOwner = false, IsAgent = true, IsViewer = true, IsActive = true },
+        new User { UserId = 12, UserName = "alexandre", HashedPassword = "123Soleil", UserEmail = "alexandre@catb.ca", IsAdministrator = false, IsOwner = false, IsAgent = false, IsViewer = true, IsActive = true },
+        new User { UserId = 11, UserName = "isidore", HashedPassword = "123Soleil", UserEmail = "imanzala@gmail.com", IsAdministrator = false, IsOwner = true, IsAgent = true, IsViewer = true, IsActive = false }
+    };
+
+        public async Task<AuthenticationResult> AuthenticateUserAsync(string usernameOrEmail, string password)
+        {
+            var user = users.FirstOrDefault(u => u.UserName == usernameOrEmail || u.UserEmail == usernameOrEmail);
+            if (user == null)
+            {
+                return new AuthenticationResult
+                {
+                    Success = false,
+                    Message = "Échec de l''authentification : utilisateur non trouvé.",
+                    UserRoles = new List<string>()
+                };
+            }
+
+            if (user.HashedPassword != password)
+            {
+                return new AuthenticationResult
+                {
+                    Success = false,
+                    Message = "Échec de l''authentification : mot de passe incorrect.",
+                    UserRoles = new List<string>()
+                };
+            }
+
+            if (!user.IsActive)
+            {
+                return new AuthenticationResult
+                {
+                    Success = false,
+                    Message = "Échec de l''authentification : le compte est suspendu.",
+                    UserRoles = new List<string>()
+                };
+            }
+
+            var roles = new List<string>();
+            if (user.IsAdministrator) roles.Add("Administrator");
+            if (user.IsOwner) roles.Add("Owner");
+            if (user.IsAgent) roles.Add("Agent");
+            if (user.IsViewer) roles.Add("Viewer");
+
+            return new AuthenticationResult
+            {
+                Success = true,
+                Message = "Authentification réussie!",
+                UserRoles = roles
+            };
+        }
+    }
+    /*Fin du code pour tests*/
+
+
     public class UserRoleUpdateModel
     {
         public bool IsAdministrator { get; set; }

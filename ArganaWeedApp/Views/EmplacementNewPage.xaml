@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
              x:Class="ArganaWeedApp.Views.EmplacementNewPage"
-             Title="Nouvel emplacement">
+             Title="Nouvel emplacement ">
+   
+    <ContentPage.BindingContext>
+        <vm:EmplacementNewViewModel />
+    </ContentPage.BindingContext>
 
-    <StackLayout Padding="10" Spacing="10" >
-        <Entry Placeholder="Code d'emplacement" x:Name="NewCodeEntry" />
-        <Entry Placeholder="Description d'emplacement" x:Name="NewDescriptionEntry" />
-        <Button Text="Ajouter" />
-        <Button Text="Quitter" Clicked="OnQuitClicked" />
+    <StackLayout Padding="10" Spacing="10" MinimumWidthRequest="400" MaximumWidthRequest="400">
+        <Entry Placeholder="Code de l'emplacement" Text="{Binding EmplacementCode}" />
+
+
+        <Entry Placeholder="Description d'emplacement" Text="{Binding EmplacementDescription}" VerticalOptions="Start" HeightRequest="80" />
+
+        <Grid ColumnSpacing="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+              
+            </Grid.ColumnDefinitions>
+            <Button Text="Enregistrer" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" />
+            <Button Grid.Column="1" Text="Quitter" Command="{Binding NavigateBackCommand}" HorizontalOptions="FillAndExpand"/>
+
+        </Grid>
+            
+        
+
+        <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+            
+
     </StackLayout>
 </ContentPage>
