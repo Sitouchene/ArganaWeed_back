@@ -1,13 +1,68 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
              x:Class="ArganaWeedApp.Views.PlantulesPage"
-             Title="Plantules">
+             Title="Inventaire">
+    
 
-    <StackLayout Padding="10">
-        <Label Text="Page des Plantules"
-               VerticalOptions="CenterAndExpand" 
-               HorizontalOptions="CenterAndExpand" />
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="AddButton" Clicked="AddButton_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource 
+            FontFamily="MaterialIcons-Regular"
+            Glyph="&#xe145;" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="RefreshButton" Command="{Binding RefreshCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource 
+            FontFamily="MaterialIcons-Regular"
+            Glyph="&#xe5d5;" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout MinimumWidthRequest="350" MaximumWidthRequest="500" HorizontalOptions="Center" Margin="5">
+       
+        <SearchBar Placeholder="Rechercher..." Text="{Binding SearchText}" BackgroundColor="white" Margin="5"/>
+     
+        <ScrollView VerticalOptions="FillAndExpand">
+            <CollectionView ItemsSource="{Binding Plantules}" 
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedPlantule, Mode=TwoWay}"
+                            SelectionChanged="OnSelectionChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10" BackgroundColor="{Binding BackgroundColor}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="1" TextColor="Black" BackgroundColor="{Binding SanteColor}" Text="{Binding Slug}" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Fill" />
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding VarieteNom}" FontSize="Body" HorizontalOptions="Start" />
+                            <Label Grid.Row="0" Grid.Column="2" Text="{Binding EmplacementCode}" FontSize="Body" HorizontalOptions="End" />
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding DateReceptionFormatted}" FontSize="Body" HorizontalOptions="Start" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding ProvenanceNom}" FontSize="Body" HorizontalOptions="Center" />
+                            <Label Grid.Row="1" Grid.Column="2" Text="{Binding Stade}" FontSize="Body" HorizontalOptions="End" />
+
+                            
+                            
+                            
+                            <BoxView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="Gray" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
     </StackLayout>
-
 </ContentPage>

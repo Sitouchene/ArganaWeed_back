@@ -7,16 +7,16 @@
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
     <Color x:Key="Primary">#000000</Color>
-    <!-- Noir -->
-    <Color x:Key="PrimaryDark">#004d00</Color>
-    <!-- DarkGreen -->
+    <!-- Noir #000 -->
+    <Color x:Key="PrimaryDark">#137547</Color>
+    <!-- DarkGreen #14213D -->
     <Color x:Key="PrimaryDarkText">#FFFFFF</Color>
     <!-- Blanc -->
-    <Color x:Key="Secondary">#CDA622</Color>
+    <Color x:Key="Secondary">#FCA311</Color>
     <!-- Dorée -->
-    <Color x:Key="SecondaryDarkText">#333300</Color>
+    <Color x:Key="SecondaryDarkText">#E5E5E5</Color>
     <!-- Dark text for secondary -->
-    <Color x:Key="Tertiary">#1B3D1B</Color>
+    <Color x:Key="Tertiary">#137547</Color>
     <!-- Une variante plus foncée de vert -->
 
     <Color x:Key="White">White</Color>

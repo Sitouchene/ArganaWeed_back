@@ -1,4 +1,6 @@
-﻿namespace ArganaWeedApp.Models
+﻿using System.Globalization;
+
+namespace ArganaWeedApp.Models
 {
     
     #region DashbordModel
@@ -137,6 +139,24 @@
         public string VarieteNom { get; set; }
         public string VarieteCode { get; set; }
         public string ProvenanceNom { get; set; }
+        public string DateReceptionFormatted => DateReception.ToString("d", CultureInfo.CurrentCulture);
+        public Color BackgroundColor => Statut ? Colors.Transparent : Colors.Gray;
+        public Color SanteColor
+        {
+            get
+            {
+                return Sante switch
+                {
+                    "Bon" => Colors.Green,
+                    "Moyen" => Colors.Yellow,
+                    "Mauvais" => Colors.Orange,
+                    "En danger" => Colors.Red,
+                    _ => Colors.Gray
+                };
+            }
+        }
+
+
 
         public override string ToString()
         {
@@ -152,6 +172,9 @@
         public DateTime? NoteRappelDate { get; set; }
         public int PlantuleId { get; set; }
         public string NoteUserName { get; set; }
+
+        public string NoteDateFormatted => NoteDate?.ToString("d", CultureInfo.CurrentCulture) ?? string.Empty;
+        public string NoteRappelDateFormatted => NoteRappelDate?.ToString("d", CultureInfo.CurrentCulture) ?? string.Empty;
 
         // Navigation property
         public Plantule Plantule { get; set; }
@@ -173,6 +196,7 @@
         public string EventNature { get; set; }
         public string EventValeur { get; set; }
         public string EventUserName { get; set; }
+        public string EventDatetimeFormatted => EventDatetime.ToString("d", CultureInfo.CurrentCulture);
 
         // Navigation property
         public Plantule Plantule { get; set; }
@@ -338,6 +362,20 @@
 
     #endregion
 
-
+    #region LaboInfos
+    public class LaboInfo
+    {
+        public int CapaciteLabo { get; set; }
+        public int CapaciteLicence { get; set; }
+        public string NomLabo { get; set; }
+        public string AdresseL1 { get; set; }
+        public string AdresseL2 { get; set; }
+        public string Email { get; set; }
+        public string Representant { get; set; }
+        public string RepresentantEmail { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact1Email { get; set; }
+    }
+    #endregion
 
 }

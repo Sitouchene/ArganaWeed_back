@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:controls="clr-namespace:ArganaWeedApp.Controls"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
+             x:Class="ArganaWeedApp.Views.ProvenanceDetailPage"
+             Title="Détails de la provenance">
+
+    <ContentPage.BindingContext>
+        <vm:ProvenanceDetailViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="10" Spacing="10" MinimumWidthRequest="350" MaximumWidthRequest="500">
+        <Frame BackgroundColor="Transparent">
+            <StackLayout>
+
+                <Label Text="Nom:" FontSize="Body"  />
+                <Entry Text="{Binding Provenance.ProvenanceNom}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,10" />
+
+                <Label Text="Description de la provenance:" FontSize="Body"  />
+                <Editor Text="{Binding Provenance.ProvenanceDescription}" FontAttributes="Bold" TextColor="{StaticResource PrimaryDarkText}" HeightRequest="80" BackgroundColor="Gray" />
+            </StackLayout>
+        </Frame>
+
+        
+
+        <Grid ColumnSpacing="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+           
+
+            <controls:CustomButton Grid.Column="0" Icon="edit" Text="Modifier" Clicked="OnUpdateButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand" />
+            <controls:CustomButton Grid.Column="1" Icon="delete" Text="Supprimer" Clicked="OnDeleteButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand"/>
+            <controls:CustomButton Grid.Column="2" Icon="arrow_back" Text="Retourner" Clicked="OnNavigateBackButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand"/>
+        </Grid>
+        <Frame BackgroundColor="Transparent">
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+        </Frame>
+    </StackLayout>
+</ContentPage>

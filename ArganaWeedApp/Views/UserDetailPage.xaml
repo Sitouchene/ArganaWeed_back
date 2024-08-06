@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArganaWeedApp.Views.UserDetailPage"
+             Title="User Detail">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="Username" FontSize="Medium" />
+            <Label Text="{Binding User.UserName}" FontSize="Large" />
+            <Label Text="Email" FontSize="Medium" />
+            <Label Text="{Binding User.UserEmail}" FontSize="Large" />
+            <Label Text="Active" FontSize="Medium" />
+            <Switch IsToggled="{Binding User.IsActive}" />
+            <Label Text="Roles" FontSize="Medium" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Admin" />
+                <Switch IsToggled="{Binding User.IsAdministrator}" />
+                <Label Text="Owner" />
+                <Switch IsToggled="{Binding User.IsOwner}" />
+                <Label Text="Agent" />
+                <Switch IsToggled="{Binding User.IsAgent}" />
+                <Label Text="Viewer" />
+                <Switch IsToggled="{Binding User.IsViewer}" />
+            </StackLayout>
+            <!--<Button Text="Edit" Clicked="OnEditUserClicked" /> -->
+            <Button Text="Edit"  />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

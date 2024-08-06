@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ArganaWeedApp.Controls.CustomButton">
-    <Frame BackgroundColor="DarkGreen" CornerRadius="10" Padding="0">
+             x:Class="ArganaWeedApp.Controls.CustomButton"
+             x:Name="this">
+
+    <Frame BackgroundColor="{StaticResource PrimaryDark}" CornerRadius="10" Padding="0">
         <Grid Padding="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="{Binding Icon}" FontFamily="MaterialIcons-Regular" TextColor="White" FontSize="Medium" VerticalOptions="Center" Grid.Column="0" />
-            <Label Text="{Binding Text}" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0,0,0" Grid.Column="1" />
+            <Label Text="{Binding Icon, Source={x:Reference this}}" FontFamily="MaterialIcons-Regular"
+                   TextColor="{StaticResource PrimaryDarkText}"
+                   FontSize="Medium" VerticalOptions="Center" Grid.Column="0" />
+            <Label Text="{Binding Text, Source={x:Reference this}}" TextColor="{StaticResource PrimaryDarkText}"
+                   FontAttributes="Bold" VerticalOptions="Center" 
+                   Margin="10,0,0,0" Grid.Column="1"  />
 
             <Grid.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnButtonTapped"/>
+                <TapGestureRecognizer Tapped="OnTapped"/>
             </Grid.GestureRecognizers>
         </Grid>
     </Frame>

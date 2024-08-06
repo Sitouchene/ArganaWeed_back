@@ -20,10 +20,18 @@ namespace ArganaWeedApp.DTOs
     {
 
     }
+
+
     public class ProvenancesResponse : BaseResponse<Provenance>
     {
 
     }
+    public class LaboInfosResponse : BaseResponse<LaboInfo>
+    {
+
+    }
+
+
     public class UsersResponse : BaseResponse<User>
     {
 

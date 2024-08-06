@@ -10,12 +10,21 @@ public partial class EmplacementNewPage : ContentPage
     }
 
 
-    private async void OnQuitClicked(object sender, EventArgs e)
+    /*private async void OnQuitClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new EmplacementsPage());
-    }
+    }*/
 
-   
+    private void OnSaveButton_Clicked(object sender, EventArgs e)
+    {
+        var viewModel = BindingContext as EmplacementNewViewModel;
+        viewModel?.SaveCommand.Execute(null);
+    }
+    private void OnCancelButton_CLicked(object sender, EventArgs e)
+    {
+        var viewModel = BindingContext as EmplacementNewViewModel;
+        viewModel?.CancelCommand.Execute(null);
+    }
 
 
 }

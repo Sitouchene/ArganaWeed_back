@@ -69,6 +69,14 @@ namespace ArganaWeedApp.Controllers
             return await _context.GetPlantulesArchivedAsync();
         }
 
+        [HttpGet("latest")]
+        public async Task<ActionResult<int>> GetLatestPlantuleId()
+        {
+            var latestPlantuleId = await _context.GetLatestPlantuleIdAsync();
+            return Ok(latestPlantuleId);
+        }
+
+
         /*
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PlantuleDetail>>> GetAllPlantules()
@@ -149,6 +157,39 @@ namespace ArganaWeedApp.Controllers
             return Ok(message);
         }
 
+        [HttpPost("import")]
+        public async Task<ActionResult<string>> ImportPlantules([FromBody] List<PlantuleImportRequest> plantules)
+        {
+            if (plantules == null || !plantules.Any())
+            {
+                return BadRequest("La liste des plantules est vide ou invalide.");
+            }
+
+            var importResults = new List<string>();
+
+            foreach (var plantule in plantules)
+            {
+                var result = await _context.AddPlantuleAsync(
+                    plantule.VarieteId,
+                    plantule.PlantuleDescription,
+                    plantule.DateReception,
+                    plantule.ProvenanceId,
+                    plantule.Stade,
+                    plantule.Sante,
+                    plantule.EmplacementId,
+                    "System" // Vous pouvez remplacer "System" par le nom de l'utilisateur approprié
+                );
+
+                importResults.Add($"Ligne {plantule.Numero}: {result}");
+            }
+
+            return Ok(new { Message = "Importation terminée avec succès!", Details = importResults });
+        }
+
+       
+
+
+
 
         [HttpPut("emplacement/{id}")]
         public async Task<ActionResult<string>> UpdatePlantuleEmplacement(int id, [FromBody] UpdateEmplacementRequest request)
@@ -213,6 +254,18 @@ namespace ArganaWeedApp.Controllers
         }
         public class PlantuleAddRequest
         {
+            public int VarieteId { get; set; }
+            public string PlantuleDescription { get; set; }
+            public DateTime DateReception { get; set; }
+            public int ProvenanceId { get; set; }
+            public string Stade { get; set; }
+            public string Sante { get; set; }
+            public int EmplacementId { get; set; }
+        }
+
+        public class PlantuleImportRequest
+        {
+            public int Numero { get; set; }
             public int VarieteId { get; set; }
             public string PlantuleDescription { get; set; }
             public DateTime DateReception { get; set; }

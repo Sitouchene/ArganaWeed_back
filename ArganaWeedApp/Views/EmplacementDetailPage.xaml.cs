@@ -11,5 +11,23 @@ namespace ArganaWeedApp.Views
             InitializeComponent();
             BindingContext = new EmplacementDetailViewModel(selectedEmplacement);
         }
+
+        private void OnUpdateButtonClicked(object sender, EventArgs e)
+        {
+            var viewModel = BindingContext as EmplacementDetailViewModel;
+            viewModel?.UpdateCommand.Execute(null);
+        }
+
+        private void OnDeleteButtonClicked(object sender, EventArgs e)
+        {
+            var viewModel = BindingContext as EmplacementDetailViewModel;
+            viewModel?.DeleteCommand.Execute(null);
+        }
+
+        private void OnNavigateBackButtonClicked(object sender, EventArgs e)
+        {
+            var viewModel = BindingContext as EmplacementDetailViewModel;
+            viewModel?.NavigateBackCommand.Execute(null);
+        }
     }
 }

@@ -57,6 +57,8 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+	  <None Remove="Resources\Images\administrator100.png" />
+	  <None Remove="Resources\Images\agent100.png" />
 	  <None Remove="Resources\Images\Argana.svg" />
 	  <None Remove="Resources\Images\arganaanimation.gif" />
 	  <None Remove="Resources\Images\arganaanimationsprite.png" />
@@ -68,30 +70,52 @@
 	  <None Remove="Resources\Images\dashboard.png" />
 	  <None Remove="Resources\Images\delete100.png" />
 	  <None Remove="Resources\Images\edit.png" />
+	  <None Remove="Resources\Images\emplacement.png" />
 	  <None Remove="Resources\Images\inventaire.png" />
+	  <None Remove="Resources\Images\inventaires.png" />
 	  <None Remove="Resources\Images\isidore.jpg" />
+	  <None Remove="Resources\Images\laboinfos.png" />
+	  <None Remove="Resources\Images\manueluser.png" />
+	  <None Remove="Resources\Images\othersettings.png" />
+	  <None Remove="Resources\Images\owner100.png" />
+	  <None Remove="Resources\Images\provenances.png" />
+	  <None Remove="Resources\Images\qradd.png" />
 	  <None Remove="Resources\Images\qrscan.png" />
 	  <None Remove="Resources\Images\salim.png" />
 	  <None Remove="Resources\Images\save100.png" />
 	  <None Remove="Resources\Images\UcenTech.svg" />
 	  <None Remove="Resources\Images\ucentechp.png" />
+	  <None Remove="Resources\Images\useradd.png" />
+	  <None Remove="Resources\Images\useredit.png" />
 	  <None Remove="Resources\Images\usermanual100.png" />
 	  <None Remove="Resources\Images\usermanual100b.png" />
+	  <None Remove="Resources\Images\users.png" />
+	  <None Remove="Resources\Images\userupdate.png" />
+	  <None Remove="Resources\Images\varietes.png" />
+	  <None Remove="Resources\Images\viewer100.png" />
 	  <None Remove="Resources\Images\weed.png" />
+	  <None Remove="Resources\Images\weedadd.png" />
+	  <None Remove="Resources\Images\weededit.png" />
+	  <None Remove="Resources\Images\weedimport.png" />
+	  <None Remove="Resources\Images\weedview.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.2" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="24.1.4" />
-		<PackageReference Include="DevExpress.Maui.DataGrid" Version="24.1.4" />
-		<PackageReference Include="DevExpress.Maui.Core" Version="24.1.4" />
+		<PackageReference Include="CsvHelper" Version="33.0.1" />
 		<PackageReference Include="DevExpress.ExpressApp" Version="24.1.4" />
 		<PackageReference Include="DevExpress.ExpressApp.EFCore" Version="24.1.4" />
 		<PackageReference Include="DevExpress.Persistent.BaseImpl.EFCore" Version="24.1.4" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.70" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.70" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.71" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.71" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="PdfSharpCore" Version="1.3.65" />
+		<PackageReference Include="QRCoder" Version="1.6.0" />
+		<PackageReference Include="SkiaSharp" Version="2.88.8" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
+		<PackageReference Include="ZXing.Net" Version="0.16.9" />
+		<PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -107,6 +131,12 @@
 	  <MauiXaml Update="Views\EmplacementsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ImportPlantulesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\LaboInfoDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -116,7 +146,46 @@
 	  <MauiXaml Update="Views\MenuPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\PlantuleFichePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PlantuleNewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\PlantulesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProvenanceDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProvenanceNewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProvenancesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\QrTest.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ScanPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UserDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UserNewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UsersPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\VarieteDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\VarieteNewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\VarietesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

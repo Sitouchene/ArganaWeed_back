@@ -269,6 +269,18 @@
 
     #endregion
 
-
+    public class LaboInfo
+    {
+        public int CapaciteLabo { get; set; }
+        public int CapaciteLicence { get; set; }
+        public string NomLabo { get; set; }
+        public string AdresseL1 { get; set; }
+        public string AdresseL2 { get; set; }
+        public string Email { get; set; }
+        public string Representant { get; set; }
+        public string RepresentantEmail { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact1Email { get; set; }
+    }
 
 }

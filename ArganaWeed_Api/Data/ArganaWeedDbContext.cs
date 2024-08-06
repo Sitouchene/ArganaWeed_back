@@ -20,6 +20,7 @@ namespace ArganaWeedApp.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<PlantuleDetail> PlantuleDetails { get; set; }
+        public DbSet<LaboInfo> LaboInfos { get; set; }
         // Dashboard
         public DbSet<PlantulesStats> PlantulesStats { get; set; }
         public DbSet<PlantulesParCategorie> PlantulesParCategorie { get; set; }
@@ -59,6 +60,8 @@ namespace ArganaWeedApp.Data
                 .HasOne(e => e.Plantule)
                 .WithMany()
                 .HasForeignKey(e => e.PlantuleId);
+
+            modelBuilder.Entity<LaboInfo>().HasNoKey();
 
             modelBuilder.Entity<PlantuleDetail>()
                 .ToView("vwPlantuleDetails")
@@ -352,6 +355,23 @@ namespace ArganaWeedApp.Data
             };
         }
 
+        public async Task<int> GetLatestPlantuleIdAsync()
+        {
+            var connection = Database.GetDbConnection();
+            await using var command = connection.CreateCommand();
+            command.CommandText = "EXEC GetLatestPlantuleId";
+
+            await connection.OpenAsync();
+
+            var result = await command.ExecuteScalarAsync();
+            await connection.CloseAsync();
+
+            return (result == DBNull.Value) ? 0 : Convert.ToInt32(result);
+        }
+
+
+
+
         public async Task<string> AddPlantuleAsync(int varieteId, string plantuleDescription, DateTime dateReception, int provenanceId, string stade, string sante, int emplacementId, string eventUserName)
         {
             try
@@ -613,5 +633,33 @@ namespace ArganaWeedApp.Data
             return "Variété supprimée avec succès!";
         }
         #endregion
+
+
+        public async Task<LaboInfosResponse> GetLaboInfoAsync()
+        {
+            var laboInfos = await LaboInfos.FromSqlRaw("EXEC GetLaboInfo").ToListAsync();
+            return new LaboInfosResponse
+            {
+                Items = laboInfos
+            };
+        }
+
+        public async Task<string> UpdateLaboInfoAsync(LaboInfo laboInfo)
+        {
+            await Database.ExecuteSqlRawAsync(
+                "EXEC UpdateLaboInfo @CapaciteLabo, @CapaciteLicence, @NomLabo, @AdresseL1, @AdresseL2, @Email, @Representant, @RepresentantEmail, @Contact1, @Contact1Email",
+                new SqlParameter("@CapaciteLabo", laboInfo.CapaciteLabo),
+                new SqlParameter("@CapaciteLicence", laboInfo.CapaciteLicence),
+                new SqlParameter("@NomLabo", laboInfo.NomLabo),
+                new SqlParameter("@AdresseL1", laboInfo.AdresseL1),
+                new SqlParameter("@AdresseL2", laboInfo.AdresseL2),
+                new SqlParameter("@Email", laboInfo.Email),
+                new SqlParameter("@Representant", laboInfo.Representant),
+                new SqlParameter("@RepresentantEmail", laboInfo.RepresentantEmail),
+                new SqlParameter("@Contact1", laboInfo.Contact1),
+                new SqlParameter("@Contact1Email", laboInfo.Contact1Email)
+            );
+            return "LaboInfo mis à jour avec succès!";
+        }
     }
 }

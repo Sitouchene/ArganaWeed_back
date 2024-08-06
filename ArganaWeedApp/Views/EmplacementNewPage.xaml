@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
+             xmlns:controls="clr-namespace:ArganaWeedApp.Controls"
              x:Class="ArganaWeedApp.Views.EmplacementNewPage"
              Title="Nouvel emplacement ">
    
@@ -9,7 +10,8 @@
         <vm:EmplacementNewViewModel />
     </ContentPage.BindingContext>
 
-    <StackLayout Padding="10" Spacing="10" MinimumWidthRequest="400" MaximumWidthRequest="400">
+    <StackLayout Padding="10" Spacing="10" MinimumWidthRequest="350" MaximumWidthRequest="500">
+        
         <Entry Placeholder="Code de l'emplacement" Text="{Binding EmplacementCode}" />
 
 
@@ -19,11 +21,19 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-              
             </Grid.ColumnDefinitions>
-            <Button Text="Enregistrer" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" />
-            <Button Grid.Column="1" Text="Quitter" Command="{Binding NavigateBackCommand}" HorizontalOptions="FillAndExpand"/>
+            
+            
+            
+            <controls:CustomButton  Grid.Column="0" Margin="0,20" HorizontalOptions="FillAndExpand"
+                                   Icon="save" Text="Enregistrer"
+                                   Clicked="OnSaveButton_Clicked"
+                                   
+                                     />
+            <controls:CustomButton  Grid.Column="1"  Margin="0,20" HorizontalOptions="FillAndExpand"
+                                   Icon="cancel" Text="Annuler" Clicked="OnCancelButton_CLicked" />
 
+            
         </Grid>
             
         

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
+             x:Class="ArganaWeedApp.Views.ProvenancesPage"
+             Title="Provenances">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="AddButton" Clicked="AddButton_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="MaterialIcons-Regular" Glyph="&#xe145;" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="RefreshButton" Command="{Binding RefreshCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="MaterialIcons-Regular" Glyph="&#xe5d5;" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout MinimumWidthRequest="350" MaximumWidthRequest="500" HorizontalOptions="Center" Margin="5">
+        <SearchBar Placeholder="Rechercher..." Text="{Binding SearchText}" BackgroundColor="white" />
+        <ScrollView VerticalOptions="FillAndExpand">
+            <ListView ItemsSource="{Binding Provenances}" HasUnevenRows="True" 
+                      SelectedItem="{Binding SelectedProvenance, Mode=TwoWay}" 
+                      ItemTapped="OnItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="5">
+                                <Label Text="{Binding ProvenanceNom}" FontSize="Default" HorizontalOptions="Start" />
+                                <Label Text="{Binding ProvenanceDescription}" FontSize="Body" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" />
+                                <BoxView HeightRequest="1" BackgroundColor="Gray" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

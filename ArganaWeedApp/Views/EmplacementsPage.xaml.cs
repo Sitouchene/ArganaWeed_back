@@ -6,10 +6,30 @@ namespace ArganaWeedApp.Views
 {
     public partial class EmplacementsPage : ContentPage
     {
+        private EmplacementsViewModel viewModel;
         public EmplacementsPage()
         {
             InitializeComponent();
-            BindingContext = new EmplacementsViewModel();
+
+            viewModel = new EmplacementsViewModel();
+            BindingContext = viewModel;
+
+            MessagingCenter.Subscribe<EmplacementDetailViewModel>(this, "RefreshEmplacements", async (sender) =>
+            {
+                await viewModel.LoadEmplacementsAsync();
+            });
+
+            /*
+            MessagingCenter.Subscribe<EmplacementDetailViewModel, Emplacement>(this, "RefreshEmplacements", async (sender, emplacement) =>
+            {
+                await viewModel.LoadEmplacementsAsync();
+            });
+
+            MessagingCenter.Subscribe<EmplacementDetailViewModel, int>(this, "DeleteEmplacement", async (sender, emplacementId) =>
+            {
+                await viewModel.LoadEmplacementsAsync();
+            });*/
+
         }
 
         private async void OnItemTapped(object sender, ItemTappedEventArgs e)

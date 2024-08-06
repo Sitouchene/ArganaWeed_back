@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
+             xmlns:controls="clr-namespace:ArganaWeedApp.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="ArganaWeedApp.Views.PlantuleFichePage"
+             Title="Fiche Plantule">
+
+    <ContentPage.BindingContext>
+        <vm:PlantuleFicheViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <StackLayout Padding="5" Spacing="5" MinimumWidthRequest="350" MaximumWidthRequest="500">
+
+            <!-- Frame: Fiche de base-->
+            <Frame BackgroundColor="Transparent" BorderColor="White">
+                <StackLayout>
+                    <Label Text="Données principales:" FontSize="Title" HorizontalTextAlignment="Center"/>
+
+                    <Grid BackgroundColor="{Binding Plantule.BackgroundColor}" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="1" TextColor="Black" BackgroundColor="{Binding Plantule.SanteColor}" Text="{Binding Plantule.Slug}" FontSize="Micro" HorizontalTextAlignment="Center" HorizontalOptions="Fill" />
+                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Plantule.VarieteNom}" FontSize="Body" HorizontalOptions="Start" />
+                        <Label Grid.Row="0" Grid.Column="2" Text="{Binding Plantule.EmplacementCode}" FontSize="Body" HorizontalOptions="End" />
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="{Binding Plantule.DateReceptionFormatted}" FontSize="Body" HorizontalOptions="Start" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Plantule.ProvenanceNom}" FontSize="Body" HorizontalOptions="Center" />
+                        <Label Grid.Row="1" Grid.Column="2" Text="{Binding Plantule.Stade}" FontSize="Body" HorizontalOptions="End" />
+                        <Image x:Name="qrimage" Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Source="{Binding QrImage}" WidthRequest="70" />
+                        <BoxView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" HeightRequest="1" BackgroundColor="Gray" />
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+
+            
+
+            <!-- Expander 1: Historique -->
+            <Frame BorderColor="Gray" CornerRadius="5" Padding="0" Margin="0,10,0,0" BackgroundColor="Transparent">
+                <toolkit:Expander x:Name="Expander1" ExpandedChanged="OnExpander1ExpandedChanged">
+                    <toolkit:Expander.Header>
+                        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource Primary}" HorizontalOptions="FillAndExpand" Padding="10,0">
+                            <Label Text="history" TextColor="{StaticResource Secondary}" FontFamily="MaterialIcons-Regular" FontSize="Medium" VerticalTextAlignment="Center" HorizontalOptions="Start" Margin="0,0,20,0"/>
+                            <Label Text="Historique " HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                            <Grid HorizontalOptions="End">
+                                <Path x:Name="UpTriangle1" Data="M 8 28 L 32 28 L 20 8 Z" Fill="#ab1313" IsVisible="False"/>
+                                <Path x:Name="DownTriangle1" Data="M 8 8 L 32 8 L 20 28 Z" Fill="#ab1313" IsVisible="True"/>
+                            </Grid>
+                        </StackLayout>
+                    </toolkit:Expander.Header>
+                    <toolkit:Expander.Content >
+                        <ListView ItemsSource="{Binding Events}" BackgroundColor="{StaticResource Primary}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid Padding="10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding EventType}" FontSize="Default" />
+                                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding EventNature}" />
+                                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding EventValeur}" />
+                                            <Label Grid.Row="0" Grid.Column="2" Text="{Binding EventDatetime}" FontSize="Caption" />
+                                            <Label Grid.Row="1" Grid.Column="2" Text="{Binding EventUserName}" FontSize="Caption" />
+                                            <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="2"/>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </toolkit:Expander.Content>
+                </toolkit:Expander>
+            </Frame>
+
+            <!-- Expander 2: Notes -->
+            <Frame BorderColor="Gray" CornerRadius="5" Padding="0" Margin="0,10,0,0" BackgroundColor="Transparent">
+                <toolkit:Expander x:Name="Expander2" ExpandedChanged="OnExpander2ExpandedChanged">
+                    <toolkit:Expander.Header>
+                        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource Primary}" HorizontalOptions="FillAndExpand" Padding="10,0">
+                            <Label Text="speaker_notes" TextColor="{StaticResource Secondary}" FontFamily="MaterialIcons-Regular" FontSize="Medium" VerticalTextAlignment="Center" HorizontalOptions="Start" Margin="0,0,20,0"/>
+                            <Label Text="Notes" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" HorizontalOptions="StartAndExpand"/>
+                            <Grid HorizontalOptions="End">
+                                <Path x:Name="UpTriangle2" Data="M 8 28 L 32 28 L 20 8 Z" Fill="#ab1313" IsVisible="False"/>
+                                <Path x:Name="DownTriangle2" Data="M 8 8 L 32 8 L 20 28 Z" Fill="#ab1313" IsVisible="True"/>
+                            </Grid>
+                        </StackLayout>
+                    </toolkit:Expander.Header>
+                    <toolkit:Expander.Content>
+                        <ListView ItemsSource="{Binding Notes}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="4*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="4*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="4*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Column="0" Grid.Row="0" Text="description" FontFamily="MaterialIcons-Regular" />
+                                            <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Text="{Binding NoteTexte}" FontAttributes="Bold" />
+
+                                            <Label Grid.Column="0" Grid.Row="1" Text="calendar_today" FontFamily="MaterialIcons-Regular" />
+                                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding NoteDateFormatted}" />
+                                            <Label Grid.Column="2" Grid.Row="1" Text="calendar_today" FontFamily="MaterialIcons-Regular" />
+                                            <Label Grid.Column="3" Grid.Row="1" Text="{Binding NoteRappelDateFormatted}" />
+                                            <Label Grid.Column="4" Grid.Row="1" Text="person" FontFamily="MaterialIcons-Regular" />
+                                            <Label Grid.Column="5" Grid.Row="1" Text="{Binding NoteUserName}" />
+                                            <BoxView Grid.Row="2" Grid.ColumnSpan="6" HeightRequest="1" Color="{StaticResource PrimaryDarkText}" />
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </toolkit:Expander.Content>
+                </toolkit:Expander>
+            </Frame>
+
+            <!-- Expander 3 : Editer plantule -->
+            <Frame BorderColor="Gray" CornerRadius="5" Padding="0" Margin="0,10,0,0" BackgroundColor="Transparent">
+                <toolkit:Expander x:Name="Expander3" ExpandedChanged="OnExpander3ExpandedChanged">
+                    <toolkit:Expander.Header>
+                        <StackLayout Orientation="Horizontal" BackgroundColor="Gray" HorizontalOptions="FillAndExpand" Padding="10,0">
+                            <Label Text="edit" TextColor="{StaticResource Secondary}" FontFamily="MaterialIcons-Regular" FontSize="Medium" VerticalTextAlignment="Center" HorizontalOptions="Start" Margin="0,0,20,0"/>
+                            <Label Text="Editer plantule" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" HorizontalOptions="StartAndExpand"/>
+                            <Grid HorizontalOptions="End">
+                                <Path x:Name="UpTriangle3" Data="M 8 28 L 32 28 L 20 8 Z" Fill="#ab1313" IsVisible="False"/>
+                                <Path x:Name="DownTriangle3" Data="M 8 8 L 32 8 L 20 28 Z" Fill="#ab1313" IsVisible="True"/>
+                            </Grid>
+                        </StackLayout>
+                    </toolkit:Expander.Header>
+                    <toolkit:Expander.Content>
+                        <Grid ColumnSpacing="5" Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="0.8*" />
+                            </Grid.ColumnDefinitions>
+
+                            <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="8" HeightRequest="2" Color="{StaticResource PrimaryDarkText}" />
+                            <BoxView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="8" HeightRequest="1" Color="{StaticResource PrimaryDarkText}"/>
+                            <BoxView Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="8" HeightRequest="1" Color="{StaticResource PrimaryDarkText}"/>
+                            <BoxView Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="8" HeightRequest="2" Color="{StaticResource PrimaryDarkText}"/>
+
+                            <BoxView Grid.Column="1" Grid.Row="0" Grid.RowSpan="8" WidthRequest="1" Color="{StaticResource PrimaryDarkText}" />
+                            <BoxView Grid.Column="3" Grid.Row="0" Grid.RowSpan="8" WidthRequest="1" Color="{StaticResource PrimaryDarkText}" />
+                            <BoxView Grid.Column="5" Grid.Row="0" Grid.RowSpan="8" WidthRequest="1" Color="{StaticResource PrimaryDarkText}" />
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Attribut"  FontAttributes="Bold" VerticalTextAlignment="Center"  />
+                            <Label Grid.Column="0" Grid.Row="2" Text="Etat de santé" VerticalTextAlignment="Center"  />
+                            <Label Grid.Column="0" Grid.Row="4" Text="Stade de vie" VerticalTextAlignment="Center"  />
+                            <Label Grid.Column="0" Grid.Row="6" Text="Emplacement" VerticalTextAlignment="Center" />
+
+                            <Label Grid.Column="2" Grid.Row="0" Text="Valeur actuelle" FontAttributes="Bold" VerticalTextAlignment="Center" />
+                            <Label Grid.Column="2" Grid.Row="2" Text="{Binding Plantule.Sante}" VerticalTextAlignment="Center"  />
+                            <Label Grid.Column="2" Grid.Row="4" Text="{Binding Plantule.Stade}" VerticalTextAlignment="Center"  />
+                            <Label Grid.Column="2" Grid.Row="6" Text="{Binding Plantule.EmplacementCode}" VerticalTextAlignment="Center"  />
+
+                            <Label Grid.Column="4" Grid.Row="0" Text="Nouvelle valeur" FontAttributes="Bold" VerticalTextAlignment="Center"  />
+
+                            <Picker x:Name="santePicker" ItemsSource="{Binding SanteOptions}" SelectedItem="{Binding SelectedSante}"
+	                            TitleColor="White" BackgroundColor="Gray" TextColor="White" Grid.Column="4" Grid.Row="2"/>
+                            <Picker x:Name="stadePicker" ItemsSource="{Binding StadeOptions}" SelectedItem="{Binding SelectedStade}"
+	                            TitleColor="White" BackgroundColor="Gray" TextColor="White" Grid.Column="4" Grid.Row="4"/>
+                            <Picker x:Name="emplacementPicker" ItemsSource="{Binding Emplacements}" ItemDisplayBinding="{Binding EmplacementCode}"
+                                    SelectedItem="{Binding SelectedEmplacement}" TitleColor="White" BackgroundColor="Gray" TextColor="White"
+                                    Grid.Column="4" Grid.Row="6"  VerticalTextAlignment="Center"  />
+
+                            <Label Grid.Column="6" Grid.Row="0" Text="Action" FontAttributes="Bold" VerticalTextAlignment="Center"  />
+                            <Button Grid.Column="6" Grid.Row="6" Text="add" FontFamily="MaterialIcons-Regular" Padding="0" Margin="3,3,3,3" Clicked="OnAddEmplacemntButton_Clicked" />
+                            
+                            <controls:CustomButton Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" Text="Enregistrer" Icon="save" Margin="3,3,3,3"
+                                                   Clicked="OnSaveEditPlantule_Clicked" />
+                            <controls:CustomButton Grid.Column="4" Grid.Row="8" Grid.ColumnSpan="3" Text="Annuler" Icon="cancel" Margin="3,3,3,3"
+                                                  Clicked="OnCancelEditPlantule_Clicked" />
+                        </Grid>
+                    </toolkit:Expander.Content>
+                </toolkit:Expander>
+            </Frame>
+            
+            
+            <!-- Expander 4: Sortir plantule -->
+            <Frame BorderColor="Gray" CornerRadius="5" Padding="0" Margin="0,10,0,0" BackgroundColor="Transparent" IsVisible="{Binding Plantule.Statut}">
+                <toolkit:Expander x:Name="Expander4" ExpandedChanged="OnExpander4ExpandedChanged">
+                    <toolkit:Expander.Header>
+                        <StackLayout Orientation="Horizontal" BackgroundColor="Gray" HorizontalOptions="FillAndExpand" Padding="10,0">
+                            <Label Text="sort" TextColor="{StaticResource Secondary}" FontFamily="MaterialIcons-Regular" FontSize="Medium" VerticalTextAlignment="Center" HorizontalOptions="Start" Margin="0,0,20,0"/>
+                            <Label Text="Sortir plantule" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" HorizontalOptions="StartAndExpand"/>
+                            <Grid HorizontalOptions="End">
+                                <Path x:Name="UpTriangle4" Data="M 8 28 L 32 28 L 20 8 Z" Fill="#ab1313" IsVisible="False"/>
+                                <Path x:Name="DownTriangle4" Data="M 8 8 L 32 8 L 20 28 Z" Fill="#ab1313" IsVisible="True"/>
+                            </Grid>
+                        </StackLayout>
+                    </toolkit:Expander.Header>
+                    <toolkit:Expander.Content>
+                        <Grid ColumnSpacing="10" RowSpacing="5" Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Date de sortie" VerticalTextAlignment="Center" />
+                            <DatePicker Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" TextColor="{StaticResource PrimaryDarkText}" BackgroundColor="Gray" Date="{Binding SortieDate}" />
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Type de sortie" VerticalTextAlignment="Center" />
+                            <Picker Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" TextColor="{StaticResource PrimaryDarkText}" BackgroundColor="Gray" ItemsSource="{Binding SortieTypeOptions}" SelectedItem="{Binding SortieType}" />
+
+                            <Label Grid.Column="0" Grid.Row="2" VerticalTextAlignment="Start" Text="Observation"  />
+                            <Editor Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" BackgroundColor="Gray" Text="{Binding SortieObservation}" HeightRequest="100" TextColor="{StaticResource PrimaryDarkText}"/>
+
+                            <controls:CustomButton Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="Sortir" Icon="exit_to_app" Clicked="OnSortirButton_Clicked" />
+                            <controls:CustomButton Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" Text="Annuler" Icon="cancel" Clicked="OnCancelSortieButton_Clicked"  />
+                        </Grid>
+                    </toolkit:Expander.Content>
+                </toolkit:Expander>
+            </Frame>
+
+            <!-- Expander 5: Ajouter note -->
+            <Frame BorderColor="Gray" CornerRadius="5" Padding="0" Margin="0,10,0,0" BackgroundColor="Transparent" >
+                <toolkit:Expander x:Name="ExpanderAddNote" ExpandedChanged="OnExpanderAddNoteExpandedChanged">
+                    <toolkit:Expander.Header>
+                        <StackLayout Orientation="Horizontal" BackgroundColor="Gray" HorizontalOptions="FillAndExpand" Padding="10,0">
+                            <Label Text="note_add" TextColor="{StaticResource Secondary}" FontFamily="MaterialIcons-Regular" FontSize="Medium" VerticalTextAlignment="Center" HorizontalOptions="Start" Margin="0,0,20,0"/>
+                            <Label Text="Ajouter note" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" HorizontalOptions="StartAndExpand"/>
+                            <Grid HorizontalOptions="End">
+                                <Path x:Name="UpTriangleAddNote" Data="M 8 28 L 32 28 L 20 8 Z" Fill="#ab1313" IsVisible="False"/>
+                                <Path x:Name="DownTriangleAddNote" Data="M 8 8 L 32 8 L 20 28 Z" Fill="#ab1313" IsVisible="True"/>
+                            </Grid>
+                        </StackLayout>
+                    </toolkit:Expander.Header>
+                    <toolkit:Expander.Content>
+                        <Grid ColumnSpacing="10" RowSpacing="5" Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Date de rappel" VerticalTextAlignment="Center" />
+                            <DatePicker Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" TextColor="{StaticResource PrimaryDarkText}" BackgroundColor="Gray" Date="{Binding NoteRappelDate}" />
+
+                            <Label Grid.Column="0" Grid.Row="1" VerticalTextAlignment="Start" Text="Texte de la note"  />
+                            <Editor Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" BackgroundColor="Gray" Text="{Binding NoteText}" HeightRequest="100" TextColor="{StaticResource PrimaryDarkText}"/>
+
+                            <controls:CustomButton Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="Ajouter" Icon="add" Clicked="OnAddNoteButton_Clicked" />
+                            <controls:CustomButton Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Text="Annuler" Icon="cancel" Clicked="OnCancelNoteButton_Clicked"  />
+                        </Grid>
+                    </toolkit:Expander.Content>
+                </toolkit:Expander>
+
+            </Frame>
+
+            <!-- Frame: Messages d'erreur-->
+
+            <Frame BorderColor="Gray" CornerRadius="5" Padding="0" Margin="0,10,0,0" BackgroundColor="Transparent">
+                <Label x:Name="ErrorMessag" Text="{Binding ErrorMessage}" TextColor="{StaticResource PrimaryDarkText}" FontSize="Body"  />
+            </Frame>
+            
+            <!-- Frame: Boutons-->
+                <Grid ColumnSpacing="5" Margin="5" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <controls:CustomButton Grid.Column="0" Grid.Row="1"  Icon="qr_code" Text="Imp. QR" Clicked="OnPrintQrButton_Clicked" />
+                    <controls:CustomButton Grid.Column="1" Grid.Row="1"  Icon="summarize" Text="Imp. fiche" Clicked="OnPrintFicheButton_Clicked" />
+                    <controls:CustomButton Grid.Column="2" Grid.Row="1"  Icon="arrow_back" Text="Retour" Clicked="OnNavigateBackButtonClicked" />
+                </Grid>
+            
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

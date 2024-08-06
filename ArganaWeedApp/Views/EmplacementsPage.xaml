@@ -29,7 +29,7 @@
 
     <StackLayout  MinimumWidthRequest="350" MaximumWidthRequest="500" HorizontalOptions="Center" Margin="5">
         <SearchBar Placeholder="Rechercher..." Text="{Binding SearchText}" BackgroundColor="white" />
-        <ScrollView>
+        <ScrollView VerticalOptions="FillAndExpand">
             <ListView ItemsSource="{Binding Emplacements}" HasUnevenRows="True" 
                       SelectedItem="{Binding SelectedEmplacement, Mode=TwoWay}" 
                       ItemTapped="OnItemTapped">

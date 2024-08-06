@@ -16,7 +16,8 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <ScrollView HorizontalOptions="CenterAndExpand" MinimumHeightRequest="400" MaximumWidthRequest="600">
+ 
+<ScrollView HorizontalOptions="CenterAndExpand" MinimumHeightRequest="350" MaximumWidthRequest="500">
         <StackLayout Padding="10" Spacing="10" VerticalOptions="FillAndExpand" HorizontalOptions="Center">
             
             <!-- Section 0: Animation logo plus appli -->
@@ -41,7 +42,7 @@
            
             <toolkit:Expander >
                 <toolkit:Expander.Header>
-                        <Label Text="Bio-Innovation (CAT-B)" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" BackgroundColor="{StaticResource Tertiary}" />
+                        <Label Text="Bio-Innovation (CAT-B)" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" BackgroundColor="{StaticResource PrimaryDark}" />
                 </toolkit:Expander.Header>
                 <toolkit:Expander.Content>
                     <Grid ColumnSpacing="5" RowSpacing="5" Margin="0,10">
@@ -68,11 +69,42 @@
                     </Grid>
                 </toolkit:Expander.Content>
             </toolkit:Expander>
+            
+            <!-- Section Manuel d'utilisateur-->
+            <toolkit:Expander >
+                <toolkit:Expander.Header>
+                    <Label Text="Manuel d'utilisation ArganaWeed" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" BackgroundColor="{StaticResource PrimaryDark}" />
+                </toolkit:Expander.Header>
+                <toolkit:Expander.Content>
+                    <Grid ColumnSpacing="5" RowSpacing="5" Margin="0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-             <!-- Section UCEN TECH ET EQUIPE DE DEVELOPPEMENT-->
+                        <Image Source="manueluser.png" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" HorizontalTextAlignment="Start"                                
+                    Text="ArganaWeed est une application de gestion d'inventaire de plantules de cannabis conçue pour les laboratoires.&#10;Elle permet de suivre chaque plantule depuis sa réception jusqu'à sa sortie, tout en enregistrant un historique complet de tous les événements.&#10;
+Cette application fonctionne en mode serveur-client et prend en charge plusieurs utilisateurs avec des rôles distincts : Administration, Paramétrages, Exploitation et Consultation."/>
+                        <Label Text="consulter le manuel  &#8658;" Grid.Column="1" Grid.Row="1" FontAttributes="Bold" TextColor="{StaticResource Secondary}" BackgroundColor="{StaticResource Tertiary}" HorizontalOptions="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLirePlus1Tapped" NumberOfTapsRequired="1"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                    </Grid>
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+
+            <!-- Section UCEN TECH ET EQUIPE DE DEVELOPPEMENT-->
             <toolkit:Expander>
                 <toolkit:Expander.Header>
-                    <Label Text="UCEN TECH: équipe de développement" HorizontalTextAlignment="Center" TextColor="Snow" FontSize="Title" BackgroundColor="{StaticResource Tertiary}" />
+                    <Label Text="UCEN TECH: équipe de développement" HorizontalTextAlignment="Center"  FontSize="Title" BackgroundColor="{StaticResource PrimaryDark}" />
                 </toolkit:Expander.Header>
                 
                 <toolkit:Expander.Content>

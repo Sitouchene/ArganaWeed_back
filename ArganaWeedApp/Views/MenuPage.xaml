@@ -5,10 +5,27 @@
              Title="Menu">
     
     
-    <StackLayout Padding="10" Spacing="10" HorizontalOptions="CenterAndExpand" WidthRequest="400">
-        
+    <StackLayout Padding="10" Spacing="10" HorizontalOptions="CenterAndExpand" MinimumWidthRequest="350" MaximumWidthRequest="500" >
+
+        <!--Baniere utilisateur -->
+        <Frame BorderColor="Transparent" CornerRadius="10" Padding="10" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource PrimaryDark}">
+            <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="FillAndExpand">
+                <!-- Image circulaire -->
+                <Frame CornerRadius="50"  HeightRequest="50" WidthRequest="50" Padding="0" IsClippedToBounds="True">
+                    <Image Source="administrator100.png" Aspect="AspectFill"/>
+                </Frame>
+
+                <!-- Informations utilisateur -->
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Label x:Name="userNameLabel" Text="User Name" FontAttributes="Bold" FontSize="Title" HorizontalTextAlignment="End"/>
+                    <Label x:Name="userRolesLabel" Text="User Roles" HorizontalTextAlignment="End"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+        <!--
         <Label x:Name="userNameLabel" Text="User Name" FontSize="Large" />
         <Label x:Name="userRolesLabel" Text="User Roles" FontSize="Medium" />
+        -->
         
         <ScrollView VerticalOptions="FillAndExpand" >
             <TableView x:Name="menuTableView" Intent="Menu">

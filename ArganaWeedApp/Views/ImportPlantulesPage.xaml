@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
+             x:Class="ArganaWeedApp.Views.ImportPlantulesPage"
+             Title="Importation des Plantules">
+
+    <ContentPage.BindingContext>
+        <vm:ImportPlantulesViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="10" MinimumHeightRequest="350" MaximumHeightRequest="500">
+        <Button Text="Choisir un fichier CSV" Command="{Binding ChooseFileCommand}" />
+        <Label Text="{Binding Message}" TextColor="Red" />
+        <ListView ItemsSource="{Binding Plantules}">
+            <ListView.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="Num" />
+                    <Label Grid.Column="1" Text="Var." />
+                    <Label Grid.Column="2" Text="Desc." />
+                    <Label Grid.Column="3" Text="Date" />
+                    <Label Grid.Column="4" Text="Prov." />
+                    <Label Grid.Column="5" Text="Stade" />
+                    <Label Grid.Column="6" Text="Sante" />
+                    <Label Grid.Column="7" Text="Emp." />
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Text="{Binding Numero}" />
+                            <Label Grid.Column="1" Text="{Binding VarieteId}" />
+                            <Label Grid.Column="2" Text="{Binding PlantuleDescription}" />
+                            <Label Grid.Column="3" Text="{Binding DateReception}" />
+                            <Label Grid.Column="4" Text="{Binding ProvenanceId}" />
+                            <Label Grid.Column="5" Text="{Binding Stade}" />
+                            <Label Grid.Column="6" Text="{Binding Sante}" />
+                            <Label Grid.Column="7" Text="{Binding EmplacementId}" />
+                            
+                            <BoxView Grid.Row="1" Grid.ColumnSpan="8" HeightRequest="1"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Importer" Command="{Binding ImportCommand}" />
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArganaWeedApp.Views.UserNewPage"
+             Title="New User">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Entry x:Name="UserNameEntry" Placeholder="Username" />
+            <Entry x:Name="UserEmailEntry" Placeholder="Email" />
+            <Entry x:Name="UserPasswordEntry" Placeholder="Password" IsPassword="True" />
+            <Label Text="Active" FontSize="Medium" />
+            <Switch x:Name="IsActiveSwitch" />
+            <Label Text="Roles" FontSize="Medium" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Admin" />
+                <Switch x:Name="IsAdministratorSwitch" />
+                <Label Text="Owner" />
+                <Switch x:Name="IsOwnerSwitch" />
+                <Label Text="Agent" />
+                <Switch x:Name="IsAgentSwitch" />
+                <Label Text="Viewer" />
+                <Switch x:Name="IsViewerSwitch" />
+            </StackLayout>
+            <!--<Button Text="Save" Clicked="OnSaveUserClicked" />
+            <Button Text="Cancel" Clicked="OnCancelUserClicked" />-->
+            <Button Text="Save"  />
+            <Button Text="Cancel" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

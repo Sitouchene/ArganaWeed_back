@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArganaWeedApp.Views.ScanPage"
+             Title="ScanPage">
+    <StackLayout>
+        <Label Text="Scanner un QR Code" />
+        <Button Text="Prendre une photo" Clicked="OnCapturePhotoClicked"/>
+        <Button Text="Sélectionner une image" Clicked="OnPickPhotoClicked"/>
+        <Image x:Name="capturedImage" WidthRequest="200" HeightRequest="200"/>
+        <Label x:Name="resultLabel" Text="Résultat du scan" />
+    </StackLayout>
+</ContentPage>

@@ -15,4 +15,7 @@
     <ShellContent Route="EmplacementDetailPage" ContentTemplate="{DataTemplate local:EmplacementDetailPage}" />
     <ShellContent Route="EmplacementNewPage" ContentTemplate="{DataTemplate local:EmplacementNewPage}" />
 
+    <ShellContent Title="Plantule Fiche" ContentTemplate="{DataTemplate local:PlantuleFichePage}" />
+    <ShellContent Route="EmplacementNewPage" ContentTemplate="{DataTemplate local:EmplacementNewPage}" />
+
 </Shell>

@@ -39,4 +39,13 @@ namespace ArganaWeedApp.DTOs
 
     }
 
+    public class LaboInfosResponse : BaseResponse<LaboInfo>
+    {
+
+    }
+
+
+
+
+
 }

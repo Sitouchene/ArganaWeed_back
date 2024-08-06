@@ -2,29 +2,42 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
+             xmlns:controls="clr-namespace:ArganaWeedApp.Controls"
              x:Class="ArganaWeedApp.Views.EmplacementDetailPage"
-             Title="Emplacement|Détails">
+             Title="Fiche emplacement">
 
+    <ContentPage.BindingContext>
+        <vm:EmplacementDetailViewModel />
+    </ContentPage.BindingContext>
 
+    <StackLayout Padding="5" Spacing="5" MinimumWidthRequest="350" MaximumWidthRequest="500">
+        <Frame BackgroundColor="Transparent">
+            <StackLayout>
+                <Label Text="Code emplacement:" FontSize="Body" />
+                <Entry Text="{Binding Emplacement.EmplacementCode}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,10" />
 
-    <StackLayout Padding="10" Spacing="10" MinimumWidthRequest="400" MaximumWidthRequest="500">
-        <Label Text="Code:" FontAttributes="Bold" />
-        <Entry Text="{Binding Emplacement.EmplacementCode}" FontAttributes="Bold" TextColor="White" />
+                <Label Text="Description de l'emplacement:" FontSize="Body" />
+                <Editor Text="{Binding Emplacement.EmplacementDescription}" FontAttributes="Bold" TextColor="{StaticResource PrimaryDarkText}" HeightRequest="80"  BackgroundColor="Gray"/>
 
-        <Label Text="Description de l'emplacement:" FontAttributes="Bold" />
-        <Editor Text="{Binding Emplacement.EmplacementDescription}" FontAttributes="Bold" TextColor="White" HeightRequest="80" />
+            </StackLayout>
+        </Frame>
 
-        <Label Text="{Binding ErrorMessage}" TextColor="Red" />
-
-        <Grid ColumnSpacing="5">
+        <Grid ColumnSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Text="Modifier" Command="{Binding UpdateCommand}" HorizontalOptions="FillAndExpand" />
-            <Button Grid.Column="1" Text="Supprimer" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand" />
-            <Button Grid.Column="2" Text="Retour" Command="{Binding NavigateBackCommand}" HorizontalOptions="FillAndExpand"/>
+        </Grid.ColumnDefinitions>
+            
+            
+        <controls:CustomButton Grid.Row="0" Grid.Column="0" Icon="edit" Text="Modifier" Clicked="OnUpdateButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand" />
+        <controls:CustomButton Grid.Row="0" Grid.Column="1" Icon="delete" Text="Supprimer" Clicked="OnDeleteButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand"/>
+        <controls:CustomButton Grid.Row="0" Grid.Column="2" Icon="arrow_back" Text="Retourner" Clicked="OnNavigateBackButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand"/>
+        
         </Grid>
+        <Frame BackgroundColor="Transparent">
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+        </Frame>
     </StackLayout>
 </ContentPage>
+

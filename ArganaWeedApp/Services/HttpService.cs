@@ -16,7 +16,16 @@ namespace ArganaWeedApp.Services
         public HttpService()
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("http://localhost:5153"); // Set your base URL here
+            if (DeviceInfo.Platform == DevicePlatform.Android)
+            {
+                _httpClient.BaseAddress = new Uri("http://10.0.2.2:5153"); // Base URL for Android emulator
+            }
+            else
+            {
+                _httpClient.BaseAddress = new Uri("http://localhost:5153"); // Base URL for other platforms
+            }
+
+            //_httpClient.BaseAddress = new Uri("http://localhost:5153"); // Set your base URL here
         }
 
         // GET request method

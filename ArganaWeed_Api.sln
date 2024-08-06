@@ -5,15 +5,7 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArganaWeedApi", "ArganaWeed_Api\ArganaWeedApi.csproj", "{35B59FA6-7370-4087-A412-F3329246741B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArganaWeedRest", "ArganaWeedRest\ArganaWeedRest.csproj", "{F43A645D-F268-478E-892B-2BD39F072AE9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArganaWeedApp", "ArganaWeedApp\ArganaWeedApp.csproj", "{F35E6B57-701B-4E44-8A31-7F0AB6E6A197}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArganaWeedAppDevEx", "ArganaWeedAppDevEx\ArganaWeedAppDevEx.csproj", "{398DBE50-3683-47A3-A9B0-7A5BDA344F9A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArganaWeedApp2", "ArganaWeedApp2\ArganaWeedApp2.csproj", "{AB65E220-FB83-4AEE-98A6-88E18974037B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArganaWeedMauiApp", "ArganaWeedMauiApp\ArganaWeedMauiApp.csproj", "{CAB0A491-F818-47D1-9CD7-7AAA4D7A61AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,36 +17,12 @@ Global
 		{35B59FA6-7370-4087-A412-F3329246741B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35B59FA6-7370-4087-A412-F3329246741B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35B59FA6-7370-4087-A412-F3329246741B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F43A645D-F268-478E-892B-2BD39F072AE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F43A645D-F268-478E-892B-2BD39F072AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F43A645D-F268-478E-892B-2BD39F072AE9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{F43A645D-F268-478E-892B-2BD39F072AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F43A645D-F268-478E-892B-2BD39F072AE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F43A645D-F268-478E-892B-2BD39F072AE9}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{F35E6B57-701B-4E44-8A31-7F0AB6E6A197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F35E6B57-701B-4E44-8A31-7F0AB6E6A197}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F35E6B57-701B-4E44-8A31-7F0AB6E6A197}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{F35E6B57-701B-4E44-8A31-7F0AB6E6A197}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F35E6B57-701B-4E44-8A31-7F0AB6E6A197}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F35E6B57-701B-4E44-8A31-7F0AB6E6A197}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{398DBE50-3683-47A3-A9B0-7A5BDA344F9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{398DBE50-3683-47A3-A9B0-7A5BDA344F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{398DBE50-3683-47A3-A9B0-7A5BDA344F9A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{398DBE50-3683-47A3-A9B0-7A5BDA344F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{398DBE50-3683-47A3-A9B0-7A5BDA344F9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{398DBE50-3683-47A3-A9B0-7A5BDA344F9A}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{AB65E220-FB83-4AEE-98A6-88E18974037B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB65E220-FB83-4AEE-98A6-88E18974037B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB65E220-FB83-4AEE-98A6-88E18974037B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{AB65E220-FB83-4AEE-98A6-88E18974037B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB65E220-FB83-4AEE-98A6-88E18974037B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB65E220-FB83-4AEE-98A6-88E18974037B}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{CAB0A491-F818-47D1-9CD7-7AAA4D7A61AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAB0A491-F818-47D1-9CD7-7AAA4D7A61AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAB0A491-F818-47D1-9CD7-7AAA4D7A61AB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{CAB0A491-F818-47D1-9CD7-7AAA4D7A61AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAB0A491-F818-47D1-9CD7-7AAA4D7A61AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAB0A491-F818-47D1-9CD7-7AAA4D7A61AB}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

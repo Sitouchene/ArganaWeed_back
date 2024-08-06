@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using ArganaWeedApp.Models;
 using ArganaWeedApp.Services;
 using Microsoft.Maui.Controls;
@@ -40,17 +41,31 @@ namespace ArganaWeedApp.ViewModels
             }
         }
 
+        private string _someParameter;
+        public string SomeParameter
+        {
+            get => _someParameter;
+            set
+            {
+                _someParameter = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand SaveCommand { get; }
         public ICommand CancelCommand { get; }
 
         public EmplacementNewViewModel()
         {
-            SaveCommand = new Command(async () => await SaveEmplacementAsync());
-            CancelCommand = new Command(async () => await Application.Current.MainPage.Navigation.PopAsync());
+            SaveCommand = new Command(async (param) => await SaveEmplacementAsync(param));
+            CancelCommand = new Command(async (param) => await CancelAsync(param));
         }
 
-        private async Task SaveEmplacementAsync()
+
+        private async Task SaveEmplacementAsync(object param)
         {
+            SomeParameter = param as string; // Capture the command parameter
+
             if (string.IsNullOrWhiteSpace(EmplacementCode) || string.IsNullOrWhiteSpace(EmplacementDescription))
             {
                 ErrorMessage = "Tous les champs doivent être remplis.";
@@ -64,6 +79,13 @@ namespace ArganaWeedApp.ViewModels
             };
 
             await ApiService.AddEmplacementAsync(emplacement);
+            await Application.Current.MainPage.Navigation.PopAsync();
+        }
+
+
+        private async Task CancelAsync(object param)
+        {
+            SomeParameter = param as string; // Capture the command parameter
             await Application.Current.MainPage.Navigation.PopAsync();
         }
     }

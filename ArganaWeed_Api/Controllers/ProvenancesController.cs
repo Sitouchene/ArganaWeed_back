@@ -12,11 +12,11 @@ namespace ArganaWeedApp.Controllers
     [Route("api/[controller]")]
     [ApiController]
     
-    public class ProvenanceController : ControllerBase
+    public class ProvenancesController : ControllerBase
     {
         private readonly ArganaWeedDbContext _context;
 
-        public ProvenanceController(ArganaWeedDbContext context)
+        public ProvenancesController(ArganaWeedDbContext context)
         {
             _context = context;
         }

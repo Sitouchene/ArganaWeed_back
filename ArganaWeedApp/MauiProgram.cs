@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-using DevExpress.Maui;
-using DevExpress.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace ArganaWeedApp
@@ -13,11 +11,11 @@ namespace ArganaWeedApp
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
-                .UseDevExpress()
-                .UseDevExpressControls()
-                .UseDevExpressCollectionView()
-                .UseDevExpressEditors()
-                .UseDevExpressDataGrid()
+                //.UseDevExpress()
+                //.UseDevExpressControls()
+                //.UseDevExpressCollectionView()
+                //.UseDevExpressEditors()
+                //.UseDevExpressDataGrid()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

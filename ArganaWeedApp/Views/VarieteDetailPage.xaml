@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
+             xmlns:controls="clr-namespace:ArganaWeedApp.Controls"
+             x:Class="ArganaWeedApp.Views.VarieteDetailPage"
+             Title="Fiche variété">
+
+    <ContentPage.BindingContext>
+        <vm:VarieteDetailViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="5" Spacing="5" MinimumWidthRequest="350" MaximumWidthRequest="500">
+        <Frame BackgroundColor="Transparent">
+            <StackLayout>
+                <Label Text="Code variété:" FontSize="Body" />
+                <Entry Text="{Binding Variete.VarieteCode}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,10" />
+
+                <Label Text="Nom variété:" FontSize="Body" />
+                <Entry Text="{Binding Variete.VarieteNom}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,10" />
+
+                <Label Text="Catégorie:" FontSize="Body" />
+                <Entry Text="{Binding Variete.VarieteCategorie}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,10" />
+
+                <Label Text="Description de l'variete:" FontSize="Body" />
+                <Editor Text="{Binding Variete.VarieteDescription}" FontAttributes="Bold" TextColor="{StaticResource PrimaryDarkText}" HeightRequest="80"  BackgroundColor="Gray"/>
+
+            </StackLayout>
+        </Frame>
+
+        <Grid ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <controls:CustomButton Grid.Row="0" Grid.Column="0" Icon="edit" Text="Modifier" Clicked="OnUpdateButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand" />
+            <controls:CustomButton Grid.Row="0" Grid.Column="1" Icon="delete" Text="Supprimer" Clicked="OnDeleteButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand"/>
+            <controls:CustomButton Grid.Row="0" Grid.Column="2" Icon="arrow_back" Text="Retourner" Clicked="OnNavigateBackButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand"/>
+
+        </Grid>
+        <Frame BackgroundColor="Transparent">
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+        </Frame>
+    </StackLayout>
+</ContentPage>
+

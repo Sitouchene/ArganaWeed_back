@@ -1,9 +1,7 @@
-
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Maui.Controls;
-using ArganaWeedApp.Views;
-
 
 namespace ArganaWeedApp.Views
 {
@@ -29,91 +27,98 @@ namespace ArganaWeedApp.Views
 
             foreach (var sectionTitle in sectionsOrder)
             {
-                // Custom header for the section
-                var header = new ViewCell
+                var rolesInSection = menuItems.Where(kvp => kvp.Value.Any(item => item.Item2 == sectionTitle))
+                                              .Select(kvp => kvp.Key)
+                                              .ToList();
+
+                if (userRoles.Any(role => rolesInSection.Contains(role)))
                 {
-                    View = new StackLayout
+                    // Custom header for the section
+                    var header = new ViewCell
                     {
-                        BackgroundColor = (Color)Application.Current.Resources["PrimaryDark"],
-                        Padding = new Thickness(10),
-                        Children =
+                        View = new StackLayout
                         {
-                            new Label
+                            BackgroundColor = (Color)Application.Current.Resources["PrimaryDark"],
+                            Padding = new Thickness(10),
+                            Children =
                             {
-                                Text = sectionTitle,
-                                TextColor = (Color)Application.Current.Resources["PrimaryDarkText"],
-                                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-                                VerticalOptions = LayoutOptions.Center
+                                new Label
+                                {
+                                    Text = sectionTitle,
+                                    TextColor = (Color)Application.Current.Resources["PrimaryDarkText"],
+                                    FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                                    VerticalOptions = LayoutOptions.Center
+                                }
                             }
                         }
-                    }
-                };
+                    };
 
-                var section = new TableSection();
+                    var section = new TableSection();
 
-                tableRoot.Add(section);
-                section.Add(header);
+                    tableRoot.Add(section);
+                    section.Add(header);
 
-                foreach (var role in userRoles)
-                {
-                    if (menuItems.ContainsKey(role))
+                    foreach (var role in userRoles)
                     {
-                        foreach (var item in menuItems[role].Where(i => i.Item2 == sectionTitle))
+                        if (menuItems.ContainsKey(role))
                         {
-                            var cell = new ViewCell
+                            foreach (var item in menuItems[role].Where(i => i.Item2 == sectionTitle))
                             {
-                                View = new StackLayout
+                                var cell = new ViewCell
                                 {
-                                    Orientation = StackOrientation.Horizontal,
-                                    Padding = new Thickness(10, 5),
-                                    Children =
+                                    View = new StackLayout
                                     {
-                                        new Image
+                                        Orientation = StackOrientation.Horizontal,
+                                        Padding = new Thickness(10, 5),
+                                        Children =
                                         {
-                                            Source = item.Item4,
-                                            WidthRequest = 40,
-                                            HeightRequest = 40,
-                                            Margin = new Thickness(0, 0, 10, 0)
-                                        },
-                                        new StackLayout
-                                        {
-                                            VerticalOptions = LayoutOptions.Center,
-                                            Children =
+                                            new Image
                                             {
-                                                new Label
+                                                Source = item.Item4,
+                                                WidthRequest = 40,
+                                                HeightRequest = 40,
+                                                Margin = new Thickness(0, 0, 10, 0)
+                                            },
+                                            new StackLayout
+                                            {
+                                                VerticalOptions = LayoutOptions.Center,
+                                                Children =
                                                 {
-                                                    Text = item.Item1,
-                                                    TextColor = (Color)Application.Current.Resources["PrimaryDarkText"]
-                                                },
-                                                new Label
-                                                {
-                                                    Text = item.Item3,
-                                                    TextColor = (Color)Application.Current.Resources["PrimaryDarkText"],
-                                                    FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label))
+                                                    new Label
+                                                    {
+                                                        Text = item.Item1,
+                                                        TextColor = (Color)Application.Current.Resources["PrimaryDarkText"]
+                                                    },
+                                                    new Label
+                                                    {
+                                                        Text = item.Item3,
+                                                        TextColor = (Color)Application.Current.Resources["PrimaryDarkText"],
+                                                        FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label))
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                            };
-                            cell.Tapped += async (s, e) =>
-                            {
-                                await Navigation.PushAsync((Page)Activator.CreateInstance(item.Item5));
-                            };
-
-                            section.Add(cell);
-
-                            var separator = new ViewCell
-                            {
-                                View = new BoxView
+                                };
+                                cell.Tapped += async (s, e) =>
                                 {
-                                    HeightRequest = 1,
-                                    Color = Colors.Gray,
-                                    HorizontalOptions = LayoutOptions.FillAndExpand
-                                }
-                            };
+                                    await Navigation.PushAsync((Page)Activator.CreateInstance(item.Item5));
+                                };
 
-                            section.Add(separator);
+                                section.Add(cell);
+
+                                var separator = new ViewCell
+                                {
+                                    View = new BoxView
+                                    {
+                                        HeightRequest = 1,
+                                        Color = Colors.Gray,
+                                        HorizontalOptions = LayoutOptions.FillAndExpand
+                                    }
+                                };
+
+                                section.Add(separator);
+                            }
                         }
                     }
                 }
@@ -122,10 +127,4 @@ namespace ArganaWeedApp.Views
             menuTableView.Root = tableRoot;
         }
     }
-
 }
-
-    
-
-
-

@@ -12,7 +12,7 @@ namespace ArganaWeedApp
             var navigationPage = new NavigationPage(new MainPage())
             {
                 BarBackgroundColor = (Color)Application.Current.Resources["Secondary"],
-                BarTextColor = (Color)Application.Current.Resources["Primary"]
+                BarTextColor = (Color)Application.Current.Resources["SecondaryDarkText"]
             };
 
             MainPage = navigationPage;

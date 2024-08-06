@@ -27,4 +27,6 @@ namespace ArganaWeedApp
     {
         public BaseResponseString() : base() { }
     }
+
+    
 }

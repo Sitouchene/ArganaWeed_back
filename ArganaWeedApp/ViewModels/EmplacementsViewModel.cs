@@ -61,7 +61,7 @@ namespace ArganaWeedApp.ViewModels
             LoadEmplacementsAsync();
         }
 
-        private async Task LoadEmplacementsAsync()
+        public async Task LoadEmplacementsAsync()
         {
             var emplacements = await ApiService.GetEmplacementsAsync();
             if (emplacements != null)

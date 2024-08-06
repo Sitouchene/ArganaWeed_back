@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ArganaWeedApp.Controls"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
+             x:Class="ArganaWeedApp.Views.LaboInfoDetailPage"
+             Title="Informations du Laboratoire">
+
+    <ContentPage.BindingContext>
+        <vm:LaboInfoDetailViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid Padding="10" MinimumWidthRequest="350" MaximumWidthRequest="500">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollView Grid.Row="0">
+            <StackLayout Spacing="1" Padding="0,10">
+                <Label Text="Capacité du Labo:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.CapaciteLabo}" Keyboard="Numeric" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+
+                <Label Text="Capacité de la Licence:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.CapaciteLicence}" Keyboard="Numeric" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+
+                <Label Text="Nom du Laboratoire:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.NomLabo}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+
+                <Label Text="Adresse Ligne 1:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.AdresseL1}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+
+                <Label Text="Adresse Ligne 2:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.AdresseL2}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+
+                <Label Text="Email:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.Email}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+
+                <Label Text="Représentant:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.Representant}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+
+                <Label Text="Email du Représentant:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.RepresentantEmail}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+
+                <Label Text="Contact 1:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.Contact1}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+
+                <Label Text="Email du Contact 1:" FontSize="Body" />
+                <Entry Text="{Binding LaboInfo.Contact1Email}" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" />
+            </StackLayout>
+        </ScrollView>
+
+        <StackLayout Grid.Row="1" Spacing="5">
+            <Grid ColumnSpacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <controls:CustomButton Grid.Column="0" Icon="save" Text="Mettre à jour" Clicked="OnUpdateButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand" />
+                <controls:CustomButton Grid.Column="1" Icon="cancel" Text="Annuler" Clicked="OnCancelButtonClicked" Margin="0,20" HorizontalOptions="FillAndExpand" />
+            </Grid>
+            
+                <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+            
+        </StackLayout>
+    </Grid>
+</ContentPage>

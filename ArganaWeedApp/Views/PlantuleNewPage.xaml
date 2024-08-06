@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ArganaWeedApp.ViewModels"
+             xmlns:controls="clr-namespace:ArganaWeedApp.Controls"
+             x:Class="ArganaWeedApp.Views.PlantuleNewPage"
+             Title="Nouvelle Plantule">
+
+    <ContentPage.BindingContext>
+        <vm:PlantuleNewViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <StackLayout Padding="10" Spacing="10" MinimumWidthRequest="350" MaximumWidthRequest="500">
+
+            <Label Text="Variété" FontSize="Small" HorizontalOptions="Start" TextColor="{StaticResource PrimaryDarkText}" />
+            <Picker BackgroundColor="Gray" ItemsSource="{Binding Varietes}" ItemDisplayBinding="{Binding VarieteCode}" SelectedItem="{Binding SelectedVariete}" />
+
+            <Label Text="Description de la plantule" FontSize="Small" HorizontalOptions="Start" TextColor="{StaticResource PrimaryDarkText}" />
+            <Editor BackgroundColor="Gray" Text="{Binding PlantuleDescription}" VerticalOptions="Start" HeightRequest="80" TextColor="{StaticResource PrimaryDarkText}" />
+
+            <Label Text="Date de réception" FontSize="Small" HorizontalOptions="Start" TextColor="{StaticResource PrimaryDarkText}" />
+            <DatePicker Date="{Binding DateReception}" Grid.ColumnSpan="2" HorizontalOptions="Fill" BackgroundColor="Gray" />
+
+            <Label Text="Provenance" FontSize="Small" HorizontalOptions="Start" TextColor="{StaticResource PrimaryDarkText}" />
+            <Picker BackgroundColor="Gray" ItemsSource="{Binding Provenances}" ItemDisplayBinding="{Binding ProvenanceNom}" SelectedItem="{Binding SelectedProvenance}" />
+
+            <Label Text="Santé" FontSize="Small" HorizontalOptions="Start" TextColor="{StaticResource PrimaryDarkText}" />
+            <Picker BackgroundColor="Gray" ItemsSource="{Binding SanteOptions}" SelectedItem="{Binding Sante}" />
+
+            <Label Text="Stade" FontSize="Small" HorizontalOptions="Start" TextColor="{StaticResource PrimaryDarkText}" />
+            <Picker BackgroundColor="Gray" ItemsSource="{Binding StadeOptions}" SelectedItem="{Binding Stade}" />
+
+            <Label Text="Emplacement" FontSize="Small" HorizontalOptions="Start" TextColor="{StaticResource PrimaryDarkText}" />
+            <Picker BackgroundColor="Gray" ItemsSource="{Binding Emplacements}" ItemDisplayBinding="{Binding EmplacementCode}" SelectedItem="{Binding SelectedEmplacement}" />
+
+            <Grid ColumnSpacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <controls:CustomButton Grid.Column="0" Margin="0,20" HorizontalOptions="FillAndExpand"
+                                       Icon="save" Text="Enregistrer"
+                                       Clicked="OnSaveButton_Clicked" />
+                <controls:CustomButton Grid.Column="1" Margin="0,20" HorizontalOptions="FillAndExpand"
+                                       Icon="cancel" Text="Annuler" Clicked="OnCancelButton_Clicked" />
+            </Grid>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+
+            <controls:CustomButton x:Name="NavigateToDetailButton" Text="Consulter plantule créée" Clicked="OnNavigateToDetailButton_Clicked" 
+                                   IsVisible="{Binding NewPlantuleDetail, Converter={StaticResource NullToVisibilityConverter}}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
