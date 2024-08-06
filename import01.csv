@@ -1,0 +1,21 @@
+Numero,VarieteId,PlantuleDescription,DateReception,ProvenanceId,Stade,Sante,EmplacementId
+1,1,Plantule a importer 01,8/1/2024,1,Magenta,Bon,1
+2,2,Plantule a importer 02,8/1/2024,2,Double Magenta,Bon,2
+3,2,Plantule a importer 03,8/2/2024,2,Initiation,Bon,3
+4,3,Plantule a importer 04,8/2/2024,1,Initiation,Bon,4
+5,2,Plantule a importer 05,8/2/2024,2,Initiation,Bon,5
+6,2,Plantule a importer 06,8/2/2024,2,Initiation,Bon,1
+7,2,Plantule a importer 07,8/2/2024,1,Initiation,Bon,2
+8,2,Plantule a importer 08,8/2/2024,2,Initiation,Bon,3
+9,1,Plantule a importer 09,8/2/2024,2,Initiation,Bon,4
+10,1,Plantule a importer 10,8/2/2024,1,Initiation,Bon,5
+11,1,Plantule a importer 11,8/2/2024,2,Initiation,Bon,1
+12,3,Plantule a importer 12,8/2/2024,2,Initiation,Bon,2
+13,3,Plantule a importer 13,8/3/2024,1,Initiation,Bon,3
+14,3,Plantule a importer 14,8/3/2024,2,Initiation,Bon,4
+15,2,Plantule a importer 15,8/3/2024,2,Initiation,Bon,5
+16,2,Plantule a importer 16,8/3/2024,1,Initiation,Bon,1
+17,2,Plantule a importer 17,8/3/2024,2,Initiation,Bon,2
+18,2,Plantule a importer 18,8/3/2024,2,Initiation,Bon,3
+19,3,Plantule a importer 19,8/3/2024,2,Initiation,Bon,4
+20,3,Plantule a importer 20,8/3/2024,1,Initiation,Bon,5
